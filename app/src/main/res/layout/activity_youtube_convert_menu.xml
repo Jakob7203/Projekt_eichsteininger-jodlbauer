@@ -5,17 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".YoutubeConvertMenu">
 
-    <Button
-        android:id="@+id/btnYouTube"
+    <EditText
+        android:id="@+id/editURL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Youtube" />
+        android:ems="10"
+        android:hint="https://www.youtube.com/watch?v=..."
+        android:inputType="textPersonName" />
 
     <Button
-        android:id="@+id/btnCamera"
+        android:id="@+id/btnDownloadMP4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Camera" />
+        android:text="Download MP4" />
+
+    <Button
+        android:id="@+id/btnDownloadMP3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Download MP3" />
 </LinearLayout>
