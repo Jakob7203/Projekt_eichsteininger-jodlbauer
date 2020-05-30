@@ -36,13 +36,33 @@ public class CameraConvertMenu extends AppCompatActivity {
                 }
             }
         });
-    }@Override
+        mp3_converter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                if(!(Static_Access.uri.equals("")))
+//                {
+                   Intent i = new Intent(CameraConvertMenu.this, ExperimentalAudioPlayer.class);
+                   startActivity(i);
+//                }
+            }
+        });
+        mp4_converter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                if(!(Static_Access.uri.equals("")))
+//                {
+                    Intent i = new Intent(CameraConvertMenu.this, ExperimentalVideoViewer.class);
+                    startActivity(i);
+//                }
+            }
+        });
+    }
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == RQ_CAMERA && resultCode == RESULT_OK) {
             Uri videoUri = intent.getData();
-            Log.d(TAG, videoUri.getPath());
-            Static_Access.uri=videoUri;
+            Static_Access.uri = videoUri.toString();//save this string to access the video
             //videoView.setVideoURI(videoUri);
         }
     }
@@ -50,7 +70,7 @@ public class CameraConvertMenu extends AppCompatActivity {
     public void request(){
         if (checkSelfPermission(Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-            // RQ_WRITE_STORAGE ist just any constant value to identify the request
+            // RQ_CAMERA ist just any constant value to identify the request
             requestPermissions(new String[]{Manifest.permission.CAMERA},
                     RQ_CAMERA);
         } else {
