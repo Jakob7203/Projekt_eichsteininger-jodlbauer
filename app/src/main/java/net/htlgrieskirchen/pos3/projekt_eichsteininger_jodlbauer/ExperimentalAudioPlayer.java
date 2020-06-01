@@ -17,8 +17,7 @@ public class ExperimentalAudioPlayer extends AppCompatActivity {
         setContentView(R.layout.activity_experimental_audio_player);
         play=findViewById(R.id.play_audio);
         pause=findViewById(R.id.pause_audio);
-        String u = "android.resource://" + getPackageName() + "/" + R.raw.video;
-        Uri uri = Uri.parse(u);
+        Uri uri = Uri.parse(Static_Access.uri);
         MediaPlayer player=MediaPlayer.create(this,uri);
         player.start();
     }

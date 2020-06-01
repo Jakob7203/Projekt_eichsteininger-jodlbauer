@@ -14,8 +14,7 @@ public class ExperimentalVideoViewer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.video_viewer);
         videoView=findViewById(R.id.videoView);
-        String u = "android.resource://" + getPackageName() + "/" + R.raw.video;
-        Uri uri = Uri.parse(u);
+        Uri uri = Uri.parse(Static_Access.uri);
         videoView.setMediaController(new MediaController(this));
         videoView.setVideoURI(uri);
         videoView.start();

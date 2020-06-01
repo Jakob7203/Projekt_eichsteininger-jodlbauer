@@ -19,14 +19,15 @@ public class CameraConvertMenu extends AppCompatActivity {
     Button mp3_converter;
     Button mp4_converter;
     Button record;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_convert_menu);
         request();
-        mp3_converter=findViewById(R.id.camera_mp3);
-        mp4_converter=findViewById(R.id.camera_mp4);
-        record=findViewById(R.id.record);
+        mp3_converter = findViewById(R.id.camera_mp3);
+        mp4_converter = findViewById(R.id.camera_mp4);
+        record = findViewById(R.id.record);
         record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,24 +40,23 @@ public class CameraConvertMenu extends AppCompatActivity {
         mp3_converter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(!(Static_Access.uri.equals("")))
-//                {
-                   Intent i = new Intent(CameraConvertMenu.this, ExperimentalAudioPlayer.class);
-                   startActivity(i);
-//                }
+                if (!(Static_Access.uri.equals(""))) {
+                    Intent i = new Intent(CameraConvertMenu.this, ExperimentalAudioPlayer.class);
+                    startActivity(i);
+                }
             }
         });
         mp4_converter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(!(Static_Access.uri.equals("")))
-//                {
+                if (!(Static_Access.uri.equals(""))) {
                     Intent i = new Intent(CameraConvertMenu.this, ExperimentalVideoViewer.class);
                     startActivity(i);
-//                }
+                }
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -67,7 +67,7 @@ public class CameraConvertMenu extends AppCompatActivity {
         }
     }
 
-    public void request(){
+    public void request() {
         if (checkSelfPermission(Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             // RQ_CAMERA ist just any constant value to identify the request

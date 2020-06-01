@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer"
-        minSdkVersion 28
+        minSdkVersion 26
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -29,7 +29,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation 'com.github.HaarigerHarald:android-youtubeExtractor:master-SNAPSHOT'
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.7.1'
     implementation 'androidx.appcompat:appcompat:1.1.0'
