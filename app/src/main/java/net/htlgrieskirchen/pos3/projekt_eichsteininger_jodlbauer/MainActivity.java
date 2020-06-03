@@ -8,13 +8,11 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-
+    private String TAG = "TAG";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         Button btnYouTube = findViewById(R.id.btnYouTube);
         btnYouTube.setOnClickListener((View v) -> {
             Intent intent = new Intent(this, YoutubeConvertMenu.class);
