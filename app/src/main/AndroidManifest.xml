@@ -20,12 +20,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ExperimentalAudioPlayer" />
-        <activity android:name=".ExperimentalVideoViewer" />
-        <activity android:name=".CameraConvertMenu" />
-        <activity android:name=".YoutubeConvertMenu" />
-        <activity android:name=".MainActivity">
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+        <activity android:name=".playlists.CameraAudioList"></activity>
+        <activity
+            android:name=".playlists.CameraVideoList"
+            android:label="@string/title_activity_camera_video_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".menues.CameraSaver" />
+        <activity android:name=".mediaplayers.ExperimentalAudioPlayer" />
+        <activity android:name=".mediaplayers.ExperimentalVideoViewer" />
+        <activity android:name=".menues.CameraConvertMenu" />
+        <activity android:name=".menues.YoutubeConvertMenu" />
+        <activity android:name=".menues.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

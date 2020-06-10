@@ -1,4 +1,4 @@
-package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer;
+package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,12 +7,15 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
+
 public class MainActivity extends AppCompatActivity {
     private String TAG = "TAG";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle("");
         Button btnYouTube = findViewById(R.id.btnYouTube);
         btnYouTube.setOnClickListener((View v) -> {
             Intent intent = new Intent(this, YoutubeConvertMenu.class);

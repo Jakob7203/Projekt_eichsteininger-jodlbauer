@@ -1,15 +1,20 @@
-package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer;
+package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
 
 import at.huber.youtubeExtractor.VideoMeta;
 import at.huber.youtubeExtractor.YouTubeExtractor;
@@ -22,7 +27,6 @@ public class YoutubeConvertMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_youtube_convert_menu);
-
         EditText editURL = findViewById(R.id.editURL);
         editURL.setText("https://www.youtube.com/watch?v=0Wc2Og4vr2I");
         Button btnDownloadMP4 = findViewById(R.id.btnDownloadMP4);
@@ -52,5 +56,21 @@ public class YoutubeConvertMenu extends AppCompatActivity {
         btnDownloadMP3.setOnClickListener((View v) -> {
 
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.headermenu, menu);
+        getSupportActionBar().setTitle("");
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.onestepback) {
+            startActivity(new Intent(this, MainActivity.class));//return to the Intent you came from
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
