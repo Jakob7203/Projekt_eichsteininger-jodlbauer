@@ -2,11 +2,11 @@ package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.YouTubeDownloa
 
 import java.io.IOException;
 
-public class Video {
+public class Song {
 
     private final Download download;
 
-    public Video(String youTubeUrl) throws IOException {
+    public Song(String youTubeUrl) throws IOException {
         String converter = Utils.convertUrl(youTubeUrl);
         this.download = Utils.getDownload(converter);
     }
