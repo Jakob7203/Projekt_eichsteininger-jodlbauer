@@ -1,5 +1,6 @@
 package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -10,23 +11,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class YoutubeConvertMenu extends AppCompatActivity {
+
+    private static final int RQ_SDCARD = 707;
+    String TAG = "SD-Card Permission";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_youtube_convert_menu);
 
-        PackageManager m = getPackageManager();
-        PackageInfo p = null;
-        try {
-            p = m.getPackageInfo(getPackageName(), 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        final String appPath = p.applicationInfo.dataDir;
-        Log.d("DownloadTask", "AppPath: " + appPath);
+        request();
 
         EditText editURL = findViewById(R.id.editURL);
         Button btnDownloadMP4 = findViewById(R.id.btnDownloadMP4);
@@ -37,7 +35,7 @@ public class YoutubeConvertMenu extends AppCompatActivity {
         btnDownloadMP3.setOnClickListener((View v) -> {
             Log.d("DownloadTask", "Button MP3-Download clicked");
             YoutubeVideoDownloadTask task = new YoutubeVideoDownloadTask();
-            task.execute(parseYTURL(editURL.getText().toString()), appPath);
+            task.execute(parseYTURL(editURL.getText().toString()));
         });
     }
 
@@ -52,5 +50,30 @@ public class YoutubeConvertMenu extends AppCompatActivity {
         }
         Log.d("DownloadTask", "URL parsed: https://www.youtube.com/watch?v=" + videoID);
         return "https://www.youtube.com/watch?v=" + videoID;
+    }
+
+    public void request() {
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // RQ_CAMERA ist just any constant value to identify the request
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    RQ_SDCARD);
+        } else {
+            Log.d(TAG, "permission for SD-Card already granted");
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == RQ_SDCARD) {
+            if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG, "permission denied");
+            } else {
+                Log.d(TAG, "permission granted");
+            }
+        }
     }
 }

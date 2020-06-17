@@ -9,10 +9,6 @@ import java.util.Collections;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-/**
- *
- * @author eeich
- */
 public class Utils {
 
     private static final String DELIMITER = "youtube";
@@ -37,7 +33,7 @@ public class Utils {
 
     //get MP3 file path
     public static String getFilePath(String path, String title) {
-        return path + "\\" + title + FILE_FORMAT;
+        return path + title + FILE_FORMAT;
     }
 
     //get converter URL
@@ -83,8 +79,6 @@ public class Utils {
         FileOutputStream fos = new FileOutputStream(mp3File);
         double bytesDownloaded = 0;
         double totalSize = download.getTotalSize();
-        int prevPercentage = -1;
-        int percentage = 0;
 
         int length = -1;
         byte[] buffer = new byte[BUFFER];
@@ -92,9 +86,6 @@ public class Utils {
         while ((length = in.read(buffer)) > -1) {
             fos.write(buffer, 0, length);
             bytesDownloaded += length;
-            percentage = (int) ((bytesDownloaded / totalSize) * 100D);
-            if (percentage != prevPercentage && percentage <= 100) printDownloadProgress(percentage);
-            prevPercentage = percentage;
         }
 
         fos.close();
@@ -102,19 +93,6 @@ public class Utils {
 
         double downloadTime = (System.currentTimeMillis() - downloadStart) / 1000D;
         System.out.println("\n\n" + mp3File.getName() + " download successful (" + downloadTime + "s).\n");
-    }
-
-    private static void printDownloadProgress(int percentage) {
-        StringBuilder progress = new StringBuilder(PROGRESS_BAR);
-        progress
-                .append('\r')
-                .append(String.join("", Collections.nCopies(percentage == 0 ? 2 : 2 - (int) (Math.log10(percentage)), " ")))
-                .append(String.format("%d%% completed [", percentage))
-                .append(String.join("", Collections.nCopies(percentage, "=")))
-                .append('>')
-                .append(String.join("", Collections.nCopies(100 - percentage, " ")))
-                .append(']');
-        System.out.print(progress);
     }
 
     //exit program
