@@ -16,7 +16,7 @@ public class YoutubeVideoDownloadTask extends AsyncTask<String, String, String> 
     protected String doInBackground(String... parameters) {
         //get download path
         Log.d("DownloadTask", "Task started");
-        String path = Utils.formatDownloadPath("/Downloads");
+        String path = Utils.formatDownloadPath("/sdcard/");
         File dir = new File(path);
         if (dir.exists() && dir.isDirectory()) System.out.println("Found " + path + ".\n");
         else {
