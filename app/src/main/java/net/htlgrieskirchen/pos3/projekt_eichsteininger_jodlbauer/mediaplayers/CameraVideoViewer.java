@@ -6,17 +6,21 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
-import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists.CameraVideoList;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.MainActivity;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 
-public class ExperimentalVideoViewer extends AppCompatActivity {
+public class CameraVideoViewer extends AppCompatActivity {
     private VideoView videoView;
     private String uri;
+    private LinearLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,14 +37,15 @@ public class ExperimentalVideoViewer extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.headermenu, menu);
-        getSupportActionBar().setTitle("");
+        ActionBar a = getSupportActionBar();
+        InflaterHelper.inflateLayout(a, linearLayout);
         return super.onCreateOptionsMenu(menu);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.onestepback) {
-            startActivity(new Intent(this, CameraVideoList.class));//return to the Intent you came from
+            startActivity(new Intent(this, MainActivity.class));//return to the Intent you came from
             finish();
         }
         return super.onOptionsItemSelected(item);

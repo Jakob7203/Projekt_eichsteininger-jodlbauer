@@ -1,6 +1,7 @@
 package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -9,13 +10,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.CameraResponse;
 
@@ -25,24 +29,34 @@ import java.io.PrintWriter;
 import java.util.List;
 
 public class CameraSaver extends AppCompatActivity {
-    String TAG = "TAG";
-    String path;
-    String uri;
-    EditText title;
-    Button saveAsMP3;
-    Button saveAsMP4;
-    String pathCameraAudio = "/sdcard/ca.json";
-    String pathCameraVideo = "/sdcard/cv.json";
+    private String TAG = "TAG";
+    private String path;
+    private String uri;
+    private EditText title;
+    private Button saveAsMP3;
+    private Button saveAsMP4;
+    private String pathCameraAudio = "/sdcard/ca.json";
+    private String pathCameraVideo = "/sdcard/cv.json";
+    private LinearLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_saver);
+        linearLayout =findViewById(R.id.ll_cs);
         Intent i = getIntent();
         path=i.getStringExtra("PATH");
         uri=i.getStringExtra("URI");
         title=findViewById(R.id.cameraTitle);
         saveAsMP3=findViewById(R.id.camera_save_mp3);
         saveAsMP4=findViewById(R.id.camera_save_mp4);
+        if(Static_Access.mode.equals("light"))
+        {
+            title.setTextColor(Color.parseColor("#f2f2f2"));
+        }
+        else
+        {
+            title.setTextColor(Color.parseColor("#0d0d0d"));
+        }
         saveAsMP3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +76,8 @@ public class CameraSaver extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.headermenu, menu);
-        getSupportActionBar().setTitle("");
+        ActionBar a = getSupportActionBar();
+        InflaterHelper.inflateLayout(a, linearLayout);
         return super.onCreateOptionsMenu(menu);
     }
     @Override

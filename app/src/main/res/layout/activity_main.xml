@@ -2,20 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/backround_light"
     android:orientation="vertical"
     tools:context=".menues.MainActivity">
 
-    <Button
+    <ImageButton
         android:id="@+id/btnYouTube"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Youtube" />
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:src="@drawable/youtube_logo_small" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnCamera"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Camera" />
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:src="@drawable/camera_logo_small" />
+
 </LinearLayout>

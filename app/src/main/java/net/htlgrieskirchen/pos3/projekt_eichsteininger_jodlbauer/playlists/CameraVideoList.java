@@ -7,26 +7,30 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
-import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.ExperimentalVideoViewer;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.CameraVideoViewer;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.CameraConvertMenu;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.ListAdapter;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
 
 public class CameraVideoList extends AppCompatActivity {
     private String TAG = "TAG";
-    ListAdapter adapter;
-    ListView listView;
-
+    private ListAdapter adapter;
+    private ListView listView;
+    private LinearLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_video_list);
-        listView = findViewById(R.id.camervideolv);
+        linearLayout = findViewById(R.id.ll_cvl);
+        listView = findViewById(R.id.cvlv);
         adapter = new ListAdapter(this, R.layout.single_playable_media, Static_Access.cameraVideos);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -34,9 +38,9 @@ public class CameraVideoList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
 //                File f = new File(Static_Access.cameraVideos.get(pos).getPath());
 //                if (f.exists()) {
-                    Intent i = new Intent(CameraVideoList.this, ExperimentalVideoViewer.class);
-                    i.putExtra("URI", Static_Access.cameraVideos.get(pos).getUri());
-                    startActivity(i);
+                Intent i = new Intent(CameraVideoList.this, CameraVideoViewer.class);
+                i.putExtra("URI", Static_Access.cameraVideos.get(pos).getUri());
+                startActivity(i);
 //                }
 //                else
 //                {
@@ -53,7 +57,8 @@ public class CameraVideoList extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.headermenu, menu);
-        getSupportActionBar().setTitle("");
+        ActionBar a = getSupportActionBar();
+        InflaterHelper.inflateLayout(a, linearLayout);
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -66,3 +71,4 @@ public class CameraVideoList extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+

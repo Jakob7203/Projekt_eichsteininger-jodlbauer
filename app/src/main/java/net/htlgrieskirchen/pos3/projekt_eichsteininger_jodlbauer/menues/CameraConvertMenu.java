@@ -15,11 +15,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.CameraResponse;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists.CameraAudioList;
@@ -36,19 +40,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CameraConvertMenu extends AppCompatActivity {
-    String TAG = "TAG";
-    String pathCameraAudio = "/sdcard/ca.json";
-    String pathCameraVideo = "/sdcard/cv.json";
+    private String TAG = "TAG";
+    private String pathCameraAudio = "/sdcard/ca.json";
+    private String pathCameraVideo = "/sdcard/cv.json";
     private static final int RQ_CAMERA = 987;
     private static final int RQ_SDCARD = 707;
-    Button mp3_lib;
-    Button mp4_lib;
-    Button record;
+    private Button mp3_lib;
+    private Button mp4_lib;
+    private ImageButton record;
+    private LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_convert_menu);
+        linearLayout = findViewById(R.id.ll_ccm);
         request();
         readFromFile();
         mp3_lib = findViewById(R.id.camera_lib_mp3);
@@ -80,7 +86,8 @@ public class CameraConvertMenu extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.headermenu, menu);
-        getSupportActionBar().setTitle("");
+        ActionBar a = getSupportActionBar();
+        InflaterHelper.inflateLayout(a, linearLayout);
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -159,7 +166,6 @@ public class CameraConvertMenu extends AppCompatActivity {
                 }
                 br.close();
                 text = "{\"list\":" + text + "}";
-                Log.d(TAG, text);
             } catch (IOException e) {
                 Log.d(TAG, "read failed");
             }
@@ -167,7 +173,6 @@ public class CameraConvertMenu extends AppCompatActivity {
                 List<CameraResponse> tempcaudio = new ArrayList<>();
                 JSONObject jsonObject = new JSONObject(text);
                 JSONArray jsonArray = jsonObject.getJSONArray("list");
-                Log.d(TAG, jsonArray.length() + "");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject o = (JSONObject) jsonArray.get(i);
                     String title = o.getString("title");
@@ -180,7 +185,7 @@ public class CameraConvertMenu extends AppCompatActivity {
             } catch (Exception e) {
                 Log.d(TAG, "Something went wrong");
             }
-            file = new File(pathCameraAudio);
+            file = new File(pathCameraVideo);
             text = "";
             try {
                 BufferedReader br = new BufferedReader(new FileReader(file));
@@ -190,7 +195,6 @@ public class CameraConvertMenu extends AppCompatActivity {
                 }
                 br.close();
                 text = "{\"list\":" + text + "}";
-                Log.d(TAG, text);
             } catch (IOException e) {
                 Log.d(TAG, "read failed");
             }
@@ -198,7 +202,6 @@ public class CameraConvertMenu extends AppCompatActivity {
                 List<CameraResponse> tempcvideo = new ArrayList<>();
                 JSONObject jsonObject = new JSONObject(text);
                 JSONArray jsonArray = jsonObject.getJSONArray("list");
-                Log.d(TAG, jsonArray.length() + "");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject o = (JSONObject) jsonArray.get(i);
                     String title = o.getString("title");
@@ -217,7 +220,7 @@ public class CameraConvertMenu extends AppCompatActivity {
             Log.d(TAG, "Files dont exist yet");
         }
     }
-    //wird eig. nicht gebraucht
+    //wird eig. nicht gebraucht//eig schon
     public static String getPath(final Context context, final Uri uri) {
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         Log.i("URI",uri+"");

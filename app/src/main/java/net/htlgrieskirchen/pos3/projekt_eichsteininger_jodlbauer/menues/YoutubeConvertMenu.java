@@ -1,69 +1,53 @@
 package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
-
-import at.huber.youtubeExtractor.VideoMeta;
-import at.huber.youtubeExtractor.YouTubeExtractor;
-import at.huber.youtubeExtractor.YtFile;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 
 public class YoutubeConvertMenu extends AppCompatActivity {
-    String TAG = "TAG";
-    String durl = "";
+    private String TAG = "TAG";
+    private String durl = "";
+    private String path = "/sdcard/";
+    private LinearLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_youtube_convert_menu);
+        linearLayout = findViewById(R.id.ll_ytcm);
         EditText editURL = findViewById(R.id.editURL);
         editURL.setText("https://www.youtube.com/watch?v=0Wc2Og4vr2I");
+        String url = editURL.getText().toString().trim();
+
         Button btnDownloadMP4 = findViewById(R.id.btnDownloadMP4);
         btnDownloadMP4.setOnClickListener((View v) -> {
-            String[] videoUrl = editURL.getText().toString().split("v=");
-            String videoID = videoUrl[1];
-            Log.d(TAG, videoID);
-            if (videoID.contains("&")) {
-                videoID = videoID.split("&")[0];
-            }
-            String format = "MP4";
-            new YouTubeExtractor(this) {
-                @Override
-                public void onExtractionComplete(SparseArray<YtFile> ytFiles, VideoMeta vMeta) {
-                    if (ytFiles != null) {
-                        int itag = 22;
-                        durl  = ytFiles.get(itag).getUrl();
-                        Log.d(TAG, durl);
-                        Uri uri = Uri.parse(durl);
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        startActivity(intent);
-                    }
-                }
-            }.extract(videoID, true, true);
+
         });
         Button btnDownloadMP3 = findViewById(R.id.btnDownloadMP3);
         btnDownloadMP3.setOnClickListener((View v) -> {
-
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.headermenu, menu);
-        getSupportActionBar().setTitle("");
+        ActionBar a = getSupportActionBar();
+        InflaterHelper.inflateLayout(a, linearLayout);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

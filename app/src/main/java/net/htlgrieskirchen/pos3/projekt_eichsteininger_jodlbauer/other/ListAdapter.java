@@ -46,14 +46,10 @@ public class ListAdapter extends BaseAdapter {
         CameraResponse playableObject = cameraResponses.get(position);
         View listItem = (givenView == null) ? inflater.inflate(this.listViewItemLayoutId, null) : givenView;
         TextView t1 = listItem.findViewById(R.id.spm_title);
-        TextView t2 = listItem.findViewById(R.id.spm_created);
         Log.d(TAG, ""+(t1==null));
-        Log.d(TAG, ""+(t2==null));
         Log.d(TAG, ""+(playableObject==null));
         String title = playableObject.getTitle();
-        String date = playableObject.getCreated();
         t1.setText(title);
-        t2.setText(date);
         return listItem;
     }
 }
