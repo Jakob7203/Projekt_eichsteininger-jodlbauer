@@ -3,6 +3,7 @@ package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,9 +17,15 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
 
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+
 public class PreferencesMenu extends AppCompatActivity {
     private SharedPreferences prefs;
     private LinearLayout linearLayout;
+    private String path = "/sdcard/preferences.txt";
+    private String TAG = "TAG";
     //private SharedPreferences.OnSharedPreferenceChangeListener preferencesChangeListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +50,7 @@ public class PreferencesMenu extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         showPrefs();
+        savePreferences(Static_Access.mode);
         int id = item.getItemId();
         if (id == R.id.onestepback) {
             startActivity(new Intent(this, MainActivity.class));//return to the Intent you came from
@@ -60,4 +68,18 @@ public class PreferencesMenu extends AppCompatActivity {
 //        String sValue = sharedPreferences.getString(key, "");
 //        Toast.makeText(this, key + " new Value: " + sValue, Toast.LENGTH_LONG).show();
 //    }
+    private void savePreferences(String toWrite)
+    {
+        try {
+            PrintWriter out = new PrintWriter(
+                    new OutputStreamWriter(
+                            new FileOutputStream(path)));
+            Log.d(TAG, toWrite);
+            out.print(toWrite);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            Log.d(TAG, "write failed");
+        }
+    }
 }

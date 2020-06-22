@@ -20,7 +20,7 @@ public class InflaterHelper {
         else
         {
             ll.setBackgroundResource(R.drawable.backround_dark);
-            a.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#283e51")));
+            a.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4b79a1")));
         }
     }
     public static void inflateHeader(ActionBar a)
@@ -32,7 +32,7 @@ public class InflaterHelper {
         }
         else
         {
-            a.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#283e51")));
+            a.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4b79a1")));
         }
     }
     public static void inflateLL( LinearLayout ll)

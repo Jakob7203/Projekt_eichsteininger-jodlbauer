@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import java.time.LocalDate;
 
 
-public class CameraResponse{
+public class CameraResponse implements Comparable<CameraResponse>{
     private String title;
     private String created;
     private String path;
@@ -76,5 +76,10 @@ public class CameraResponse{
         toReturn=gson.toJson(this);
         Log.d("TAG", toReturn);
         return toReturn;
+    }
+
+    @Override
+    public int compareTo(CameraResponse o) {
+        return this.getTitle().compareTo(o.getTitle());
     }
 }

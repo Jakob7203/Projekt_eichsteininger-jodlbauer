@@ -2,6 +2,7 @@ package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,6 +21,8 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterH
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.ListAdapter;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
 
+import java.io.File;
+
 public class CameraVideoList extends AppCompatActivity {
     private String TAG = "TAG";
     private ListAdapter adapter;
@@ -36,7 +39,8 @@ public class CameraVideoList extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-//                File f = new File(Static_Access.cameraVideos.get(pos).getPath());
+                File f = new File(Static_Access.cameraVideos.get(pos).getPath());
+                Log.d(TAG, ""+f.exists());
 //                if (f.exists()) {
                 Intent i = new Intent(CameraVideoList.this, CameraVideoViewer.class);
                 i.putExtra("URI", Static_Access.cameraVideos.get(pos).getUri());

@@ -46,7 +46,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="200dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_button"
+                android:background="@drawable/round_button_light"
                 android:text="Save as Audio"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="34sp" />
@@ -57,7 +57,7 @@
                 android:layout_height="100dp"
                 android:layout_marginRight="40dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_button"
+                android:background="@drawable/round_button_light"
                 android:text="Save as Video"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="34sp" />

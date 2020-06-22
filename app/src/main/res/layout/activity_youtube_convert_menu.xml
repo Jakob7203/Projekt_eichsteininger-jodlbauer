@@ -42,7 +42,7 @@
                 android:layout_height="200px"
                 android:layout_marginTop="100dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_button"
+                android:background="@drawable/round_button_light"
                 android:text="Download Video"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="34sp" />
@@ -58,7 +58,7 @@
                 android:layout_height="200px"
                 android:layout_marginTop="100dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_button"
+                android:background="@drawable/round_button_light"
                 android:text="Download Audio"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="34sp" />

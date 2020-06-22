@@ -7,8 +7,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,16 +19,11 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists.Camer
 
 public class CameraAudioPlayer extends AppCompatActivity {
     private static final String TAG = CameraAudioPlayer.class.getSimpleName();
-    private Button play;
-    private Button pause;
-    private LinearLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: entered");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_experimental_audio_player);
-
-        intializeViews();
         int orientation = getResources().getConfiguration().orientation;
         if (orientation != Configuration.ORIENTATION_PORTRAIT) {
             finish();
@@ -47,10 +40,6 @@ public class CameraAudioPlayer extends AppCompatActivity {
                 .findFragmentById(R.id.rightfrag);
         CameraResponse item = Static_Access.currentAudio;
         rightFragment.play(item, this);
-    }
-
-    private void intializeViews() {
-        //initialize Buttons and Onlick Listeners
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

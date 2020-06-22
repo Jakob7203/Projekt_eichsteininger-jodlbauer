@@ -1,6 +1,7 @@
 package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ public class CameraAudioButtonFragment extends Fragment {
     private Button play_pause;
     private MediaPlayer player;
     private LinearLayout linearLayout;
+    CameraResponse cameraResponse;
+    Context context;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -29,6 +32,16 @@ public class CameraAudioButtonFragment extends Fragment {
         linearLayout = view.findViewById(R.id.ll_cab);
         InflaterHelper.inflateLL(linearLayout);
         intializeViews(view);
+        if(Static_Access.mode.equals("light"))
+        {
+            play_pause.setBackgroundResource(R.drawable.round_button_light);
+            play_pause.setTextColor(Color.parseColor("#0d0d0d"));
+        }
+        else
+        {
+            play_pause.setBackgroundResource(R.drawable.round_button_dark);
+            play_pause.setTextColor(Color.parseColor("#f2f2f2"));
+        }
         return view;
     }
 
@@ -38,11 +51,16 @@ public class CameraAudioButtonFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(Static_Access.currentAudio!=null) {
-                    if (!player.isPlaying()) {
-                        player.start();
-                    }
                     if (player.isPlaying()) {
                         player.stop();
+                        play_pause.setText("Play");
+                    }
+                    else
+                    {
+                        Uri u = Uri.parse(cameraResponse.getUri());
+                        player = MediaPlayer.create(context, u);
+                        player.start();
+                        play_pause.setText("Pause");
                     }
                 }
             }
@@ -55,6 +73,8 @@ public class CameraAudioButtonFragment extends Fragment {
     }
 
     public void play(CameraResponse item, Context c) {
+        cameraResponse= item;
+        context=c;
         Uri u = Uri.parse(item.getUri());
         player = MediaPlayer.create(c, u);
     }

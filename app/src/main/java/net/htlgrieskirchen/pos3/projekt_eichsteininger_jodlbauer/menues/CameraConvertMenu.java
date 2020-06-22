@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -60,6 +61,22 @@ public class CameraConvertMenu extends AppCompatActivity {
         mp3_lib = findViewById(R.id.camera_lib_mp3);
         mp4_lib = findViewById(R.id.camera_lib_mp4);
         record = findViewById(R.id.record);
+        if(Static_Access.mode.equals("light"))
+        {
+            record.setImageResource(R.drawable.camera_button_light);
+            mp3_lib.setTextColor(Color.parseColor("#0d0d0d"));
+            mp4_lib.setTextColor(Color.parseColor("#0d0d0d"));
+            mp3_lib.setBackgroundResource(R.drawable.round_button_light);
+            mp4_lib.setBackgroundResource(R.drawable.round_button_light);
+        }
+        else
+        {
+            record.setImageResource(R.drawable.camera_button_dark);
+            mp3_lib.setTextColor(Color.parseColor("#f2f2f2"));
+            mp4_lib.setTextColor(Color.parseColor("#f2f2f2"));
+            mp3_lib.setBackgroundResource(R.drawable.round_button_dark);
+            mp4_lib.setBackgroundResource(R.drawable.round_button_dark);
+        }
         record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,11 +123,10 @@ public class CameraConvertMenu extends AppCompatActivity {
             Uri videoUri = intent.getData();
             Log.d(TAG, videoUri.toString());
             String filePath = "file://" + getFilesDir()+File.separator+getPath(this,videoUri);//check if you can convert this back to uri
-            Uri u = Uri.fromFile(new File(filePath));
             Intent i = new Intent(this, CameraSaver.class);
             i.putExtra("PATH",filePath);
             i.putExtra("URI",videoUri.toString());
-            Log.d(TAG, videoUri.toString());
+            Log.d(TAG, filePath);
             startActivity(i);
         }
     }

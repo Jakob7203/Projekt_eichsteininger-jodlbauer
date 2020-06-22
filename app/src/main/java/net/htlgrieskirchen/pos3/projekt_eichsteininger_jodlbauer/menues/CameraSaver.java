@@ -26,6 +26,7 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.List;
 
 public class CameraSaver extends AppCompatActivity {
@@ -51,11 +52,20 @@ public class CameraSaver extends AppCompatActivity {
         saveAsMP4=findViewById(R.id.camera_save_mp4);
         if(Static_Access.mode.equals("light"))
         {
-            title.setTextColor(Color.parseColor("#f2f2f2"));
+            title.setTextColor(Color.parseColor("#0d0d0d"));
+            saveAsMP3.setTextColor(Color.parseColor("#0d0d0d"));
+            saveAsMP4.setTextColor(Color.parseColor("#0d0d0d"));
+            saveAsMP3.setBackgroundResource(R.drawable.round_button_light);
+            saveAsMP4.setBackgroundResource(R.drawable.round_button_light);
+
         }
         else
         {
-            title.setTextColor(Color.parseColor("#0d0d0d"));
+            title.setTextColor(Color.parseColor("#f2f2f2"));
+            saveAsMP3.setTextColor(Color.parseColor("#f2f2f2"));
+            saveAsMP4.setTextColor(Color.parseColor("#f2f2f2"));
+            saveAsMP3.setBackgroundResource(R.drawable.round_button_dark);
+            saveAsMP4.setBackgroundResource(R.drawable.round_button_dark);
         }
         saveAsMP3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +105,7 @@ public class CameraSaver extends AppCompatActivity {
         {
             CameraResponse c = new CameraResponse(title.getText().toString(),uri,path);
             list.add(c);
+            Collections.sort(list);
             title.setText("");
             startActivity(new Intent(CameraSaver.this,MainActivity.class));
         }

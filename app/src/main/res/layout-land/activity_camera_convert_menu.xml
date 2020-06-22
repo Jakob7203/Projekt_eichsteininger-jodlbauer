@@ -26,7 +26,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_button"
+                android:background="@drawable/round_button_light"
                 android:text="Video&#10;Library"
                 android:textAllCaps="false"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -41,7 +41,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_button"
+                android:background="@drawable/round_button_light"
                 android:text="Audio&#10;Library"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@android:color/black"
@@ -55,7 +55,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/camera_button" />
+                android:src="@drawable/camera_button_light" />
         </TableRow>
 
     </TableLayout>
