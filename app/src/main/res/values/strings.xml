@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Projekt-Eichsteininger-Jodlbauer</string>
+    <string name="channel_name">DownloadNotification-Channel</string>
+    <string name="channel_description">Notification-Channel used to send notifications as soon as a download is finished</string>
 </resources>

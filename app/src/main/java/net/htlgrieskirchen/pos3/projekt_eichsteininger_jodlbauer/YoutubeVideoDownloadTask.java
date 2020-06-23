@@ -1,7 +1,12 @@
 package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer;
 
+import android.app.NotificationManager;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.YouTubeDownload.Utils;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.YouTubeDownload.Song;
@@ -9,8 +14,11 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.YouTubeDownload
 import java.io.File;
 import java.io.IOException;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class YoutubeVideoDownloadTask extends AsyncTask<String, String, String> {
+
+    private static final String CHANNEL_ID = "channel";
 
     @Override
     protected String doInBackground(String... parameters) {
@@ -26,14 +34,24 @@ public class YoutubeVideoDownloadTask extends AsyncTask<String, String, String> 
         }
 
         Song song = null;
+        String songTitle = null;
         try {
             song = new Song(parameters[0]);
-            String songTitle = song.getDownload().getSongTitle();
+            songTitle = song.getDownload().getSongTitle();
             String mp3File = Utils.getFilePath(path, songTitle);
             Utils.download(song.getDownload(), mp3File);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(YoutubeConvertMenu.menuInstance.getApplicationContext(), parameters[1])
+                .setSmallIcon(android.R.drawable.stat_sys_download_done)
+                .setContentTitle("Download finished!")
+                .setContentText("Successfully downloaded " + songTitle)
+                .setAutoCancel(true);
+        int notificationId = 1;
+        NotificationManager notificationManager = (NotificationManager) YoutubeConvertMenu.menuInstance.getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(notificationId, mBuilder.build());
         return "";
     }
 }

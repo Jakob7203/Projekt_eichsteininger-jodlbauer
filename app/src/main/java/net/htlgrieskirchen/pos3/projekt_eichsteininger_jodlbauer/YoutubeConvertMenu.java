@@ -1,10 +1,9 @@
 package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer;
 
 import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class YoutubeConvertMenu extends AppCompatActivity {
 
     private static final int RQ_SDCARD = 707;
+    public static YoutubeConvertMenu menuInstance = null;
     String TAG = "SD-Card Permission";
 
     @Override
@@ -24,7 +24,19 @@ public class YoutubeConvertMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_youtube_convert_menu);
 
+        String CHANNEL_ID = "100";
+        CharSequence name = getString(R.string.channel_name);
+        String description = getString(R.string.channel_description);
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+        channel.setDescription(description);
+        NotificationManager notificationManager = getSystemService(
+                NotificationManager.class);
+        notificationManager.createNotificationChannel(channel);
+
+
         request();
+        menuInstance = this;
 
         EditText editURL = findViewById(R.id.editURL);
         Button btnDownloadMP4 = findViewById(R.id.btnDownloadMP4);
@@ -35,7 +47,7 @@ public class YoutubeConvertMenu extends AppCompatActivity {
         btnDownloadMP3.setOnClickListener((View v) -> {
             Log.d("DownloadTask", "Button MP3-Download clicked");
             YoutubeVideoDownloadTask task = new YoutubeVideoDownloadTask();
-            task.execute(parseYTURL(editURL.getText().toString()));
+            task.execute(parseYTURL(editURL.getText().toString()), CHANNEL_ID);
         });
     }
 
