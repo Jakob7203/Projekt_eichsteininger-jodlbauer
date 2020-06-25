@@ -1,21 +1,16 @@
-package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer;
+package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.YouTubeDownload;
 
 import android.app.NotificationManager;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
-import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.YouTubeDownload.Utils;
-import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.YouTubeDownload.Song;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.YoutubeConvertMenu;
 
 import java.io.File;
 import java.io.IOException;
-
 import static android.content.Context.NOTIFICATION_SERVICE;
-
 public class YoutubeVideoDownloadTask extends AsyncTask<String, String, String> {
 
     private static final String CHANNEL_ID = "channel";
@@ -26,6 +21,7 @@ public class YoutubeVideoDownloadTask extends AsyncTask<String, String, String> 
         Log.d("DownloadTask", "Task started");
         String path = Utils.formatDownloadPath("/sdcard/");
         File dir = new File(path);
+        Log.d("TAG", dir.getAbsolutePath());
         if (dir.exists() && dir.isDirectory()) System.out.println("Found " + path + ".\n");
         else {
             Log.d("DownloadTask", "Task ended. Cause: DirectoryPath not found");
@@ -44,7 +40,7 @@ public class YoutubeVideoDownloadTask extends AsyncTask<String, String, String> 
             e.printStackTrace();
         }
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(YoutubeConvertMenu.menuInstance.getApplicationContext(), parameters[1])
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.YoutubeConvertMenu.menuInstance.getApplicationContext(), parameters[1])
                 .setSmallIcon(android.R.drawable.stat_sys_download_done)
                 .setContentTitle("Download finished!")
                 .setContentText("Successfully downloaded " + songTitle)

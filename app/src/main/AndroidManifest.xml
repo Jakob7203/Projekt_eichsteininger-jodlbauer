@@ -21,11 +21,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ExperimentalAudioPlayer" />
-        <activity android:name=".ExperimentalVideoViewer" />
-        <activity android:name=".CameraConvertMenu" />
-        <activity android:name=".YoutubeConvertMenu" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".mediaplayers.CameraAudioPlayer" />
+        <activity android:name=".mediaplayers.CameraVideoViewer" />
+        <activity android:name=".menues.CameraSaver" />
+        <activity android:name=".menues.CameraConvertMenu" />
+        <activity android:name=".menues.PreferencesMenu" />
+        <activity android:name=".menues.YoutubeConvertMenu" />
+        <activity android:name=".playlists.CameraVideoList" />
+        <activity android:name=".playlists.CameraAudioList" />
+        <activity android:name=".menues.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
