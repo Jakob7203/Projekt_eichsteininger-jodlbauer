@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ public class YoutubeConvertMenu extends AppCompatActivity {
 
     private static final int RQ_SDCARD = 707;
     public static YoutubeConvertMenu menuInstance = null;
+    public static ProgressBar prgDownload = null;
     String TAG = "SD-Card Permission";
 
     @Override
@@ -38,7 +40,9 @@ public class YoutubeConvertMenu extends AppCompatActivity {
         request();
         menuInstance = this;
 
+        prgDownload = findViewById(R.id.prgDownload);
         EditText editURL = findViewById(R.id.editURL);
+        EditText editTitle = findViewById(R.id.editTitle);
         Button btnDownloadMP4 = findViewById(R.id.btnDownloadMP4);
         btnDownloadMP4.setOnClickListener((View v) -> {
             //entfällt bis auf Weiteres
@@ -46,8 +50,9 @@ public class YoutubeConvertMenu extends AppCompatActivity {
         Button btnDownloadMP3 = findViewById(R.id.btnDownloadMP3);
         btnDownloadMP3.setOnClickListener((View v) -> {
             Log.d("DownloadTask", "Button MP3-Download clicked");
+            prgDownload.setVisibility(View.VISIBLE);
             YoutubeVideoDownloadTask task = new YoutubeVideoDownloadTask();
-            task.execute(parseYTURL(editURL.getText().toString()), CHANNEL_ID);
+            task.execute(parseYTURL(editURL.getText().toString()), editTitle.getText().toString(), CHANNEL_ID);
         });
     }
 

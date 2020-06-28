@@ -1,5 +1,8 @@
 package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.YouTubeDownload;
 
+import android.view.View;
+import android.widget.ProgressBar;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,7 +25,8 @@ public class Utils {
     private static final int SONG_TITLE_BEGIN_INDEX = 7;
     private static final int DOWNLOAD_SIZE = SONG_TITLE + 1;
     private static final int BUFFER = 1024;
-    private static final int PROGRESS_BAR = 140;
+
+    private static int percentage = 0;
 
     //remove "" or '\' from path
     public static String formatDownloadPath(String path) {
@@ -70,7 +74,7 @@ public class Utils {
     }
 
     //download file from download URL
-    public static void download(Download download, String file) throws IOException {
+    public static void download(Download download, String file, ProgressBar bar) throws IOException {
         double downloadStart = System.currentTimeMillis();
 
         InputStream in = download.getUrl().openStream();
@@ -79,18 +83,18 @@ public class Utils {
         double bytesDownloaded = 0;
         double totalSize = download.getTotalSize();
         int prevPercentage = -1;
-        int percentage = 0;
 
         int length = -1;
         byte[] buffer = new byte[BUFFER];
+        boolean downloadFinished = false;
 
         while ((length = in.read(buffer)) > -1) {
             fos.write(buffer, 0, length);
             bytesDownloaded += length;
-            /*
             percentage = (int) ((bytesDownloaded / totalSize) * 100D);
-            if (percentage != prevPercentage && percentage <= 100) ;
-            prevPercentage = percentage;*/
+            if (percentage != prevPercentage && percentage <= 100) downloadFinished = true;
+            prevPercentage = percentage;
+            updateProgressBar(bar, downloadFinished);
         }
 
         fos.close();
@@ -104,5 +108,13 @@ public class Utils {
     public static void exit(int status) {
         System.out.println("Exiting program...");
         System.exit(status);
+    }
+
+    public static void updateProgressBar(ProgressBar bar, boolean downloadFinished) {
+        if (downloadFinished) {
+            bar.setVisibility(View.INVISIBLE);
+        } else {
+            bar.setProgress(percentage, true);
+        }
     }
 }

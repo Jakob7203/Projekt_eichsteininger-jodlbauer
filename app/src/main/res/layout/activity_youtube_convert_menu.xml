@@ -7,12 +7,27 @@
     android:orientation="vertical"
     tools:context=".YoutubeConvertMenu">
 
+    <ProgressBar
+        android:id="@+id/prgDownload"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
+
     <EditText
         android:id="@+id/editURL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="https://youtu.be/..."
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Title"
         android:inputType="textPersonName" />
 
     <Button

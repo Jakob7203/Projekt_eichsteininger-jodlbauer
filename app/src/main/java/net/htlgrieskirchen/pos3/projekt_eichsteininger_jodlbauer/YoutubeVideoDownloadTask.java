@@ -18,36 +18,32 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class YoutubeVideoDownloadTask extends AsyncTask<String, String, String> {
 
-    private static final String CHANNEL_ID = "channel";
-
     @Override
     protected String doInBackground(String... parameters) {
-        //get download path
-        Log.d("DownloadTask", "Task started");
         String path = Utils.formatDownloadPath("/sdcard/");
         File dir = new File(path);
         if (dir.exists() && dir.isDirectory()) System.out.println("Found " + path + ".\n");
         else {
-            Log.d("DownloadTask", "Task ended. Cause: DirectoryPath not found");
             System.out.print("Could not locate " + path + "\n");
             Utils.exit(2);
         }
 
-        Song song = null;
-        String songTitle = null;
+        String fileTitle = parameters[1];
+
         try {
-            song = new Song(parameters[0]);
-            songTitle = song.getDownload().getSongTitle();
-            String mp3File = Utils.getFilePath(path, "test");
-            Utils.download(song.getDownload(), mp3File);
+            Song song = new Song(parameters[0]);
+            String songTitle = song.getDownload().getSongTitle();
+            if (fileTitle.trim().equals("")) fileTitle = songTitle;
+            String mp3File = Utils.getFilePath(path, fileTitle);
+            Utils.download(song.getDownload(), mp3File, YoutubeConvertMenu.prgDownload);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(YoutubeConvertMenu.menuInstance.getApplicationContext(), parameters[1])
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(YoutubeConvertMenu.menuInstance.getApplicationContext(), parameters[2])
                 .setSmallIcon(android.R.drawable.stat_sys_download_done)
                 .setContentTitle("Download finished!")
-                .setContentText("Successfully downloaded " + "test")
+                .setContentText("Successfully downloaded " + fileTitle)
                 .setAutoCancel(true);
         int notificationId = 1;
         NotificationManager notificationManager = (NotificationManager) YoutubeConvertMenu.menuInstance.getSystemService(NOTIFICATION_SERVICE);
