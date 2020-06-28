@@ -71,7 +71,6 @@ public class Utils {
 
     //download file from download URL
     public static void download(Download download, String file) throws IOException {
-        System.out.println(String.format("\nDownloading %s...", download.getSongTitle()));
         double downloadStart = System.currentTimeMillis();
 
         InputStream in = download.getUrl().openStream();
@@ -79,6 +78,8 @@ public class Utils {
         FileOutputStream fos = new FileOutputStream(mp3File);
         double bytesDownloaded = 0;
         double totalSize = download.getTotalSize();
+        int prevPercentage = -1;
+        int percentage = 0;
 
         int length = -1;
         byte[] buffer = new byte[BUFFER];
@@ -86,6 +87,10 @@ public class Utils {
         while ((length = in.read(buffer)) > -1) {
             fos.write(buffer, 0, length);
             bytesDownloaded += length;
+            /*
+            percentage = (int) ((bytesDownloaded / totalSize) * 100D);
+            if (percentage != prevPercentage && percentage <= 100) ;
+            prevPercentage = percentage;*/
         }
 
         fos.close();

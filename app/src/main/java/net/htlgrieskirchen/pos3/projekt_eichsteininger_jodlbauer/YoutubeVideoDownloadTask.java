@@ -38,7 +38,7 @@ public class YoutubeVideoDownloadTask extends AsyncTask<String, String, String> 
         try {
             song = new Song(parameters[0]);
             songTitle = song.getDownload().getSongTitle();
-            String mp3File = Utils.getFilePath(path, songTitle);
+            String mp3File = Utils.getFilePath(path, "test");
             Utils.download(song.getDownload(), mp3File);
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,7 +47,7 @@ public class YoutubeVideoDownloadTask extends AsyncTask<String, String, String> 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(YoutubeConvertMenu.menuInstance.getApplicationContext(), parameters[1])
                 .setSmallIcon(android.R.drawable.stat_sys_download_done)
                 .setContentTitle("Download finished!")
-                .setContentText("Successfully downloaded " + songTitle)
+                .setContentText("Successfully downloaded " + "test")
                 .setAutoCancel(true);
         int notificationId = 1;
         NotificationManager notificationManager = (NotificationManager) YoutubeConvertMenu.menuInstance.getSystemService(NOTIFICATION_SERVICE);
