@@ -16,8 +16,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="60dp"
-            android:layout_weight="1">
+            android:layout_marginTop="20dp">
 
             <EditText
                 android:id="@+id/editURL"
@@ -36,22 +35,39 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:paddingTop="40dp">
+            android:layout_marginTop="30dp">
+
+            <EditText
+                android:id="@+id/edit_YT_Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Titile (optional)"
+                android:inputType="textPersonName"
+                android:paddingLeft="30px"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColorHint="@android:color/black"
+                android:textSize="34sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <Button
                 android:id="@+id/btnDownloadMP3"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
+                android:layout_height="300px"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="100dp"
                 android:layout_weight="1"
                 android:background="@drawable/round_button_light"
                 android:text="Download as MP3"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="34sp" />
         </TableRow>
-
     </TableLayout>
 
 </LinearLayout>

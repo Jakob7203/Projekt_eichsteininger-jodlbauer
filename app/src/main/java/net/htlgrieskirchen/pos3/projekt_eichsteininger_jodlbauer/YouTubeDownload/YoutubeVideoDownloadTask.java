@@ -1,5 +1,6 @@
 package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.YouTubeDownload;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -10,11 +11,18 @@ import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
+import com.google.gson.Gson;
+
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.YouTubeConvertMenu;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.YouTubeSaver;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.YouTubeDownload;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -58,8 +66,9 @@ public class YoutubeVideoDownloadTask extends AsyncTask<String, String, String> 
             }
             String mp3File = Utils.getFilePath(path, songTitle);
             File f = new File(mp3File);
-            Log.d("NACHT", f.exists() + "");
             if (!f.exists()) {
+                Static_Access.youTubeAudios.add(new YouTubeDownload(songTitle, path,parameters[0]));
+                writeToFile();
                 Utils.download(song.getDownload(), mp3File);
             } else {
                 notify = false;
@@ -85,5 +94,21 @@ public class YoutubeVideoDownloadTask extends AsyncTask<String, String, String> 
             c.startActivity(new Intent(c, YouTubeConvertMenu.class));
         }
         return "";
+    }
+    private void writeToFile()
+    {
+        Log.d("TAG", "are you getting used?");
+        try {
+            @SuppressLint("SdCardPath") PrintWriter out = new PrintWriter(
+                    new OutputStreamWriter(
+                            new FileOutputStream("/sdcard/project_eichsteininger_jodlbauer/yta.json")));
+            Gson gson = new Gson();
+            String toWrite = gson.toJson(Static_Access.youTubeAudios);
+            out.print(toWrite);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            Log.d("TAG", "the writing fucked up");
+        }
     }
 }

@@ -3,9 +3,12 @@ package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues;
 import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -82,7 +85,14 @@ public class YouTubeSaver extends AppCompatActivity {
             try {
                 if(url.contains("//www.youtube.com/watch?v=")||url.contains("//youtu.be/"))
                 {
-                    task.execute(parseYTURL(parseYTURL(url)), CHANNEL_ID, editTitle.getText().toString().trim());
+                    if(isConnectedToInternet())
+                    {
+                        task.execute((parseYTURL(url)), CHANNEL_ID, editTitle.getText().toString().trim());
+                    }
+                    else
+                    {
+                        Toast.makeText(menuInstance, "No Internet Connection", Toast.LENGTH_LONG).show();
+                    }
                 }
                 else
                 {
@@ -154,5 +164,19 @@ public class YouTubeSaver extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+    private boolean isConnectedToInternet()
+    {
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+        }
+        else {
+            connected = false;
+        }
+        return connected;
     }
 }
