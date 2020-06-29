@@ -2,14 +2,11 @@ package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -52,7 +49,7 @@ public class CameraAudioFragment extends Fragment {
     }
 
     private void itemSelected(int position) {
-        CameraResponse item = Static_Access.cameraAudio.get(position);
+        CameraResponse item = Static_Access.cameraAudios.get(position);
         listener.onSelectionChanged(item);
     }
 
@@ -63,7 +60,7 @@ public class CameraAudioFragment extends Fragment {
                 new net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.ListAdapter(
                         getActivity(),
                         R.layout.single_playable_media,
-                        Static_Access.cameraAudio) {
+                        Static_Access.cameraAudios) {
                 };
         list.setAdapter(adapter);
     }

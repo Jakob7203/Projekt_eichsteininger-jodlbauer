@@ -196,7 +196,7 @@ public class CameraConvertMenu extends AppCompatActivity {
                     String uri = o.getString("uri");
                     tempcaudio.add(new CameraResponse(title, path, uri));
                 }
-                Static_Access.cameraAudio = tempcaudio;
+                Static_Access.cameraAudios = tempcaudio;
             } catch (Exception e) {
                 Log.d(TAG, "Something went wrong");
             }

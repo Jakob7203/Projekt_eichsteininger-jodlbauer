@@ -22,6 +22,8 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.CameraResponse;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists.CameraAudioList;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists.CameraVideoList;
 
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
@@ -39,6 +41,8 @@ public class CameraSaver extends AppCompatActivity {
     private String pathCameraAudio = "/sdcard/project_eichsteininger_jodlbauer/ca.json";
     private String pathCameraVideo = "/sdcard/project_eichsteininger_jodlbauer/cv.json";
     private LinearLayout linearLayout;
+    private boolean edit;
+    private boolean mp3list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +51,8 @@ public class CameraSaver extends AppCompatActivity {
         Intent i = getIntent();
         path=i.getStringExtra("PATH");
         uri=i.getStringExtra("URI");
+        edit=i.getBooleanExtra("EDIT",false);
+        mp3list=i.getBooleanExtra("LIST",false);
         title=findViewById(R.id.cameraTitle);
         saveAsMP3=findViewById(R.id.camera_save_mp3);
         saveAsMP4=findViewById(R.id.camera_save_mp4);
@@ -70,8 +76,12 @@ public class CameraSaver extends AppCompatActivity {
         saveAsMP3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addToList(Static_Access.cameraAudio);
+                addToList(Static_Access.cameraAudios);
                 writeToFile(true);
+                if(edit)
+                {
+                    writeToFile(false);
+                }
             }
         });
         saveAsMP4.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +89,10 @@ public class CameraSaver extends AppCompatActivity {
             public void onClick(View v) {
                 addToList(Static_Access.cameraVideos);
                 writeToFile(false);
+                if(edit)
+                {
+                    writeToFile(true);
+                }
             }
         });
     }
@@ -106,8 +120,21 @@ public class CameraSaver extends AppCompatActivity {
             CameraResponse c = new CameraResponse(title.getText().toString().trim(),uri,path);
             list.add(c);
             Collections.sort(list);
-            title.setText("");
-            startActivity(new Intent(CameraSaver.this,MainActivity.class));
+            if(edit)
+            {
+                if(mp3list)
+                {
+                    startActivity(new Intent(CameraSaver.this, CameraAudioList.class));
+                }
+                else
+                {
+                    startActivity(new Intent(CameraSaver.this, CameraVideoList.class));
+                }
+            }
+            else
+            {
+                startActivity(new Intent(CameraSaver.this,MainActivity.class));
+            }
         }
         else
         {
@@ -123,7 +150,7 @@ public class CameraSaver extends AppCompatActivity {
                         new OutputStreamWriter(
                                 new FileOutputStream(pathCameraAudio)));
                 Gson gson = new Gson();
-                String toWrite = gson.toJson(Static_Access.cameraAudio);
+                String toWrite = gson.toJson(Static_Access.cameraAudios);
                 Log.d(TAG, toWrite);
                 out.print(toWrite);
                 out.flush();

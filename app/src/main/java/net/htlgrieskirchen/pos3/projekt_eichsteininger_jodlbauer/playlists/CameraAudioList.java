@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.CameraAudioButtonFragment;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.CameraAudioPlayer;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.CameraConvertMenu;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.CameraSaver;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.CameraResponse;
@@ -52,6 +54,10 @@ public class CameraAudioList extends AppCompatActivity implements  CameraAudioFr
         int viewId = v.getId();
         if (viewId == R.id.calv) {
             getMenuInflater().inflate(R.menu.contextmenu, menu);
+            ListView tlv = (ListView) v;
+            AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            CameraResponse obj = (CameraResponse) tlv.getItemAtPosition(acmi.position);
+            Static_Access.currentAudio=obj;
         }
         super.onCreateContextMenu(menu, v, menuInfo);
     }
@@ -59,6 +65,13 @@ public class CameraAudioList extends AppCompatActivity implements  CameraAudioFr
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.edit_c) {
             Toast.makeText(this, "Editing item", Toast.LENGTH_LONG).show();
+            Static_Access.cameraAudios.remove(Static_Access.currentAudio);
+            Intent i = new Intent(this, CameraSaver.class);
+            i.putExtra("PATH",Static_Access.currentAudio.getPath());
+            i.putExtra("URI",Static_Access.currentAudio.getUri());
+            i.putExtra("EDIT",true);
+            i.putExtra("LIST",true);
+            startActivity(i);
             return true;
         }
         if (item.getItemId() == R.id.delete_c) {
