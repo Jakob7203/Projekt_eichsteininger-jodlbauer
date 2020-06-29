@@ -3,10 +3,14 @@ package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,23 +19,25 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.CameraAudioButtonFragment;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.CameraAudioPlayer;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.CameraConvertMenu;
-import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.MainActivity;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.CameraResponse;
 
 public class CameraAudioList extends AppCompatActivity implements  CameraAudioFragment.OnSelectionChangedListener{
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = "TAG";
     private CameraAudioButtonFragment rightFragment;
     private boolean showRight = false;
     private LinearLayout linearLayout;
+    private ListView lv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_audio_list);
         linearLayout = findViewById(R.id.ll_cal);
         initializeView();
+        lv = findViewById(R.id.calv);
+        registerForContextMenu(lv);
     }
 
     private void initializeView() {
@@ -40,7 +46,27 @@ public class CameraAudioList extends AppCompatActivity implements  CameraAudioFr
                 .findFragmentById(R.id.fragRight);
         showRight = rightFragment != null && rightFragment.isInLayout();
     }
-
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        int viewId = v.getId();
+        if (viewId == R.id.calv) {
+            getMenuInflater().inflate(R.menu.contextmenu, menu);
+        }
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.edit_c) {
+            Toast.makeText(this, "Editing item", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        if (item.getItemId() == R.id.delete_c) {
+            Toast.makeText(this, "Deleting item", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        return super.onContextItemSelected(item);
+    }
     @Override
     public void onSelectionChanged(CameraResponse item) {
         if (showRight) rightFragment.play(item, this);
@@ -71,52 +97,3 @@ public class CameraAudioList extends AppCompatActivity implements  CameraAudioFr
         return super.onOptionsItemSelected(item);
     }
 }
-//    private String TAG = "TAG";
-//    ListAdapter adapter;
-//    ListView listView;
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_camera_audio_list);
-//        listView = findViewById(R.id.cameraaudiolv);
-//        adapter = new ListAdapter(this, R.layout.single_playable_media, Static_Access.cameraAudio);
-//        listView.setAdapter(adapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-//                File f = new File(Static_Access.cameraAudio.get(pos).getPath());
-//                Log.d(TAG, Static_Access.cameraAudio.get(pos).getPath());
-//                Log.d(TAG, ""+f.exists());//somehow doesnt exist
-//                //if (f.exists()) {
-//                    Intent i = new Intent(CameraAudioList.this, CameraAudioPlayer.class);
-//                    i.putExtra("URI", Static_Access.cameraAudio.get(pos).getUri());
-//                    startActivity(i);
-////                }
-////                else
-////                {
-////                    Toast.makeText(CameraAudioList.this, "It appears the File has been deleted", Toast.LENGTH_LONG).show();
-////                    Static_Access.cameraAudio.remove(pos);
-////                    adapter = new ListAdapter(CameraAudioList.this, R.layout.single_playable_media, Static_Access.cameraAudio);
-////                    listView.setAdapter(adapter);
-//                //}
-//            }
-//        });
-//
-//    }
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.headermenu, menu);
-//        getSupportActionBar().setTitle("");
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == R.id.onestepback) {
-//            startActivity(new Intent(this, CameraConvertMenu.class));//return to the Intent you came from
-//            finish();
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-//}

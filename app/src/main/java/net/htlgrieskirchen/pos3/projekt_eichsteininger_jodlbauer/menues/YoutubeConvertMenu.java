@@ -27,8 +27,6 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Ac
 
 public class YoutubeConvertMenu extends AppCompatActivity {
     private String TAG = "TAG";
-    private String durl = "";
-    private String path = "/sdcard/";
     private EditText editURL;
     private LinearLayout linearLayout;
     private static final int RQ_SDCARD = 707;
@@ -39,7 +37,6 @@ public class YoutubeConvertMenu extends AppCompatActivity {
         setContentView(R.layout.activity_youtube_convert_menu);
         linearLayout = findViewById(R.id.ll_ytcm);
         editURL = findViewById(R.id.editURL);
-        editURL.setText("https://www.youtube.com/watch?v=0Wc2Og4vr2I");
         String url = editURL.getText().toString().trim();
         Button btnDownloadMP4 = findViewById(R.id.btnDownloadMP4);
         Button btnDownloadMP3 = findViewById(R.id.btnDownloadMP3);
@@ -78,8 +75,8 @@ public class YoutubeConvertMenu extends AppCompatActivity {
         });
         btnDownloadMP3.setOnClickListener((View v) -> {
             Log.d("DownloadTask", "Button MP3-Download clicked");
-            YoutubeVideoDownloadTask task = new YoutubeVideoDownloadTask();
-            task.execute(parseYTURL(editURL.getText().toString()), CHANNEL_ID);
+            YoutubeVideoDownloadTask task = new YoutubeVideoDownloadTask(this);
+            task.execute(parseYTURL(url), CHANNEL_ID);
         });
     }
 
@@ -140,78 +137,3 @@ public class YoutubeConvertMenu extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-//    public static class YoutubeConvertMenu extends AppCompatActivity {
-//
-//
-//
-//        @Override
-//        protected void onCreate(Bundle savedInstanceState) {
-//            super.onCreate(savedInstanceState);
-//            setContentView(R.layout.activity_youtube_convert_menu);
-//
-//            String CHANNEL_ID = "100";
-//            CharSequence name = getString(R.string.channel_name);
-//            String description = getString(R.string.channel_description);
-//            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-//            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-//            channel.setDescription(description);
-//            NotificationManager notificationManager = getSystemService(
-//                    NotificationManager.class);
-//            notificationManager.createNotificationChannel(channel);
-//
-//
-//            request();
-//            menuInstance = this;
-//
-//            EditText editURL = findViewById(R.id.editURL);
-//            Button btnDownloadMP4 = findViewById(R.id.btnDownloadMP4);
-//            btnDownloadMP4.setOnClickListener((View v) -> {
-//                //entfällt bis auf Weiteres
-//            });
-//            Button btnDownloadMP3 = findViewById(R.id.btnDownloadMP3);
-//            btnDownloadMP3.setOnClickListener((View v) -> {
-//                Log.d("DownloadTask", "Button MP3-Download clicked");
-//                YoutubeVideoDownloadTask task = new YoutubeVideoDownloadTask();
-//                task.execute(parseYTURL(editURL.getText().toString()), CHANNEL_ID);
-//            });
-//        }
-//
-//        private String parseYTURL(String videoID) {
-//            if(videoID.contains("&")) {
-//                videoID = videoID.split("&")[0];
-//            }
-//            if(videoID.contains("v=")) {
-//                videoID = videoID.split("v=")[1];
-//            } else {
-//                videoID = videoID.split("be/")[1];
-//            }
-//            Log.d("DownloadTask", "URL parsed: https://www.youtube.com/watch?v=" + videoID);
-//            return "https://www.youtube.com/watch?v=" + videoID;
-//        }
-//
-//        public void request() {
-//            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                    != PackageManager.PERMISSION_GRANTED) {
-//                // RQ_CAMERA ist just any constant value to identify the request
-//                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-//                        RQ_SDCARD);
-//            } else {
-//                Log.d(TAG, "permission for SD-Card already granted");
-//            }
-//        }
-//
-//        @Override
-//        public void onRequestPermissionsResult(int requestCode,
-//                                               @NonNull String[] permissions,
-//                                               @NonNull int[] grantResults) {
-//            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//            if (requestCode == RQ_SDCARD) {
-//                if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-//                    Log.d(TAG, "permission denied");
-//                } else {
-//                    Log.d(TAG, "permission granted");
-//                }
-//            }
-//        }
-//    }
-//}

@@ -24,7 +24,7 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     private String TAG = "TAG";
-    private String path = "/sdcard/preferences.txt";
+    private String path = "/sdcard/project_eichsteininger_jodlbauer/preferences.txt";
     LinearLayout linearLayout;
 
     @Override
@@ -76,19 +76,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void readFromFile() {
-        File file = new File(path);
-        String text = "";
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = br.readLine()) != null) {
-                text += (line);
+        try
+        {
+            File file = new File(path);
+            String text = "";
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    text += (line);
+                }
+                br.close();
+                text = text.replaceAll("\n", "");
+            } catch (IOException e) {
+                Log.d(TAG, "read failed");
             }
-            br.close();
-            text = text.replaceAll("\n", "");
-        } catch (IOException e) {
-            Log.d(TAG, "read failed");
+            Static_Access.mode = text;
         }
-        Static_Access.mode = text;
+        catch (Exception e)
+        {
+            Log.d(TAG, "files dont exist");
+        }
     }
 }

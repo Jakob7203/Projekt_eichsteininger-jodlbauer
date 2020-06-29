@@ -24,7 +24,7 @@ import java.io.PrintWriter;
 public class PreferencesMenu extends AppCompatActivity {
     private SharedPreferences prefs;
     private LinearLayout linearLayout;
-    private String path = "/sdcard/preferences.txt";
+    private String path = "/sdcard/project_eichsteininger_jodlbauer/preferences.txt";
     private String TAG = "TAG";
     //private SharedPreferences.OnSharedPreferenceChangeListener preferencesChangeListener;
     @Override

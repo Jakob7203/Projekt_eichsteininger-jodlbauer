@@ -42,8 +42,8 @@ import java.util.List;
 
 public class CameraConvertMenu extends AppCompatActivity {
     private String TAG = "TAG";
-    private String pathCameraAudio = "/sdcard/ca.json";
-    private String pathCameraVideo = "/sdcard/cv.json";
+    private String pathCameraAudio = "/sdcard/project_eichsteininger_jodlbauer/ca.json";
+    private String pathCameraVideo = "/sdcard/project_eichsteininger_jodlbauer/cv.json";
     private static final int RQ_CAMERA = 987;
     private static final int RQ_SDCARD = 707;
     private Button mp3_lib;
@@ -192,10 +192,9 @@ public class CameraConvertMenu extends AppCompatActivity {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject o = (JSONObject) jsonArray.get(i);
                     String title = o.getString("title");
-                    String created = o.getString("created");
                     String path = o.getString("path");
                     String uri = o.getString("uri");
-                    tempcaudio.add(new CameraResponse(title, created, path, uri));
+                    tempcaudio.add(new CameraResponse(title, path, uri));
                 }
                 Static_Access.cameraAudio = tempcaudio;
             } catch (Exception e) {
@@ -221,10 +220,9 @@ public class CameraConvertMenu extends AppCompatActivity {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject o = (JSONObject) jsonArray.get(i);
                     String title = o.getString("title");
-                    String created = o.getString("created");
                     String path = o.getString("path");
                     String uri = o.getString("uri");
-                    tempcvideo.add(new CameraResponse(title, created, path, uri));
+                    tempcvideo.add(new CameraResponse(title, path, uri));
                 }
                 Static_Access.cameraVideos = tempcvideo;
             } catch (Exception e) {

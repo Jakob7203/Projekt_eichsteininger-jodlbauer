@@ -36,8 +36,8 @@ public class CameraSaver extends AppCompatActivity {
     private EditText title;
     private Button saveAsMP3;
     private Button saveAsMP4;
-    private String pathCameraAudio = "/sdcard/ca.json";
-    private String pathCameraVideo = "/sdcard/cv.json";
+    private String pathCameraAudio = "/sdcard/project_eichsteininger_jodlbauer/ca.json";
+    private String pathCameraVideo = "/sdcard/project_eichsteininger_jodlbauer/cv.json";
     private LinearLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +103,7 @@ public class CameraSaver extends AppCompatActivity {
     {
         if(!(title.getText().toString().trim().equals("")))
         {
-            CameraResponse c = new CameraResponse(title.getText().toString(),uri,path);
+            CameraResponse c = new CameraResponse(title.getText().toString().trim(),uri,path);
             list.add(c);
             Collections.sort(list);
             title.setText("");

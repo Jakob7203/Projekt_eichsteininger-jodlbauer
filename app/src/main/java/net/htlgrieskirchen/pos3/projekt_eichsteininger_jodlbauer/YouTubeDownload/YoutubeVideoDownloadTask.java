@@ -1,6 +1,7 @@
 package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.YouTubeDownload;
 
 import android.app.NotificationManager;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -12,14 +13,17 @@ import java.io.File;
 import java.io.IOException;
 import static android.content.Context.NOTIFICATION_SERVICE;
 public class YoutubeVideoDownloadTask extends AsyncTask<String, String, String> {
-
+    private Context c;
     private static final String CHANNEL_ID = "channel";
-
+    public  YoutubeVideoDownloadTask(Context c)
+    {
+        this.c = c;
+    }
     @Override
     protected String doInBackground(String... parameters) {
         //get download path
         Log.d("DownloadTask", "Task started");
-        String path = Utils.formatDownloadPath("/sdcard/");
+        String path = Utils.formatDownloadPath("/sdcard/project_eichsteininger_jodlbauer/youtube_audio/");
         File dir = new File(path);
         Log.d("TAG", dir.getAbsolutePath());
         if (dir.exists() && dir.isDirectory()) System.out.println("Found " + path + ".\n");
@@ -35,6 +39,7 @@ public class YoutubeVideoDownloadTask extends AsyncTask<String, String, String> 
             song = new Song(parameters[0]);
             songTitle = song.getDownload().getSongTitle();
             String mp3File = Utils.getFilePath(path, songTitle);
+            Log.d("YIKES", mp3File);
             Utils.download(song.getDownload(), mp3File);
         } catch (IOException e) {
             e.printStackTrace();
