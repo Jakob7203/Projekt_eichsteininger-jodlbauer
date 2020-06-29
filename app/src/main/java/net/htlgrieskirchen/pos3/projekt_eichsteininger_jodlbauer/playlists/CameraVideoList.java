@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.CameraVideoViewer;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.CameraConvertMenu;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.CameraSaver;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.FileUtils;
@@ -52,28 +53,34 @@ public class CameraVideoList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
                 CameraResponse c = Static_Access.cameraVideos.get(pos);
                 String path = FileUtils.getPath(CameraVideoList.this, Uri.parse(c.getUri()));
-                File f = new File(path);
-                Toast.makeText(CameraVideoList.this, f.getPath() , Toast.LENGTH_LONG).show();
-                /*if(f.exists())
-                {
-                    Intent i = new Intent(CameraVideoList.this, CameraVideoViewer.class);
-                    i.putExtra("URI", Static_Access.cameraVideos.get(pos).getUri());
-                    startActivity(i);
+                try {
+                    File f = new File(path);
+                    if (f.exists()) {
+                        Intent i = new Intent(CameraVideoList.this, CameraVideoViewer.class);
+                        i.putExtra("URI", Static_Access.cameraVideos.get(pos).getUri());
+                        startActivity(i);
+                    } else {
+                        delete(c);
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    Toast.makeText(CameraVideoList.this, "The File has been deleted", Toast.LENGTH_LONG).show();
-                    Static_Access.cameraVideos.remove(c);
-                    writeToFile();
-                    listView.setAdapter(new net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.ListAdapter(
-                            CameraVideoList.this,
-                            R.layout.single_playable_media,
-                            Static_Access.cameraVideos) {
-                    });
-                }*/
+                    delete(c);
+                }
             }
         });
 
+    }
+    private void delete(CameraResponse c)
+    {
+        Toast.makeText(CameraVideoList.this, "The File has been deleted", Toast.LENGTH_LONG).show();
+        Static_Access.cameraVideos.remove(c);
+        writeToFile();
+        listView.setAdapter(new net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.ListAdapter(
+                CameraVideoList.this,
+                R.layout.single_playable_media,
+                Static_Access.cameraVideos) {
+        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

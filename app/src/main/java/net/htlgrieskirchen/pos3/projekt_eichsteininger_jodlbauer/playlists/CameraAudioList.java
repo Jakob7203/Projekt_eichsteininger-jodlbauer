@@ -55,12 +55,34 @@ public class CameraAudioList extends AppCompatActivity implements  CameraAudioFr
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CameraResponse c = Static_Access.cameraAudios.get(position);
                 String path = FileUtils.getPath(CameraAudioList.this, Uri.parse(c.getUri()));
-                File f = new File(path);
-                Toast.makeText(CameraAudioList.this, f.getPath() , Toast.LENGTH_LONG).show();
+                try {
+                    File f = new File(path);
+                    if (f.exists()) {
+                        Intent i = new Intent(CameraAudioList.this, CameraAudioPlayer.class);
+                        i.putExtra("URI", Static_Access.cameraAudios.get(position).getUri());
+                        startActivity(i);
+                    } else {
+                        delete(c);
+                    }
+                }
+                catch (Exception e)
+                {
+                    delete(c);
+                }
             }
         });
     }
-
+    private void delete(CameraResponse c)
+    {
+        Toast.makeText(CameraAudioList.this, "The File has been deleted", Toast.LENGTH_LONG).show();
+        Static_Access.cameraAudios.remove(c);
+        writeToFile();
+        lv.setAdapter(new net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.ListAdapter(
+                CameraAudioList.this,
+                R.layout.single_playable_media,
+                Static_Access.cameraAudios) {
+        });
+    }
     private void initializeView() {
         Log.d(TAG, "initializeView: entered");
         rightFragment = (CameraAudioButtonFragment) getSupportFragmentManager()
@@ -94,7 +116,7 @@ public class CameraAudioList extends AppCompatActivity implements  CameraAudioFr
             return true;
         }
         if (item.getItemId() == R.id.delete_c) {
-            String path = FileUtils.getPath(this, Uri.parse(Static_Access.currentVideo.getUri()));
+            String path = FileUtils.getPath(this, Uri.parse(Static_Access.currentAudio.getUri()));
             File f = new File(path);
             Static_Access.cameraAudios.remove(Static_Access.currentAudio);
             writeToFile();
