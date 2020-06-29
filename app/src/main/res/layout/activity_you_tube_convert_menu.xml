@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_ycm"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backround_light"
+    android:orientation="vertical"
+    tools:context=".menues.YouTubeConvertMenu">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/yt_audio_lib"
+                android:layout_width="wrap_content"
+                android:layout_height="200px"
+                android:layout_marginTop="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button_light"
+                android:text="Audio Library"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="34sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp">
+
+            <Button
+                android:id="@+id/convert_new_yt"
+                android:layout_width="wrap_content"
+                android:layout_height="200px"
+                android:layout_weight="1"
+                android:background="@drawable/round_button_light"
+                android:text="Convert New"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="34sp" />
+        </TableRow>
+
+    </TableLayout>
+</LinearLayout>

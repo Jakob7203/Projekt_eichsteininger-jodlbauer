@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -25,38 +26,38 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.YouTubeDownload
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
 
-public class YoutubeConvertMenu extends AppCompatActivity {
+public class YouTubeSaver extends AppCompatActivity {
     private String TAG = "TAG";
     private EditText editURL;
+    private EditText editTitle;
     private LinearLayout linearLayout;
     private static final int RQ_SDCARD = 707;
-    public static YoutubeConvertMenu menuInstance = null;
+    public static YouTubeSaver menuInstance = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_youtube_convert_menu);
-        linearLayout = findViewById(R.id.ll_ytcm);
+        setContentView(R.layout.activity_youtube_saver);
+        linearLayout = findViewById(R.id.ll_yts);
         editURL = findViewById(R.id.editURL);
-        String url = editURL.getText().toString().trim();
-        Button btnDownloadMP4 = findViewById(R.id.btnDownloadMP4);
+        editTitle=findViewById(R.id.edit_YT_Title);
         Button btnDownloadMP3 = findViewById(R.id.btnDownloadMP3);
         if(Static_Access.mode.equals("light"))
         {
             editURL.setHintTextColor(Color.parseColor("#0d0d0d"));
             editURL.setTextColor(Color.parseColor("#0d0d0d"));
-            btnDownloadMP4.setTextColor(Color.parseColor("#0d0d0d"));
+            editTitle.setHintTextColor(Color.parseColor("#0d0d0d"));
+            editTitle.setTextColor(Color.parseColor("#0d0d0d"));
             btnDownloadMP3.setTextColor(Color.parseColor("#0d0d0d"));
             btnDownloadMP3.setBackgroundResource(R.drawable.round_button_light);
-            btnDownloadMP4.setBackgroundResource(R.drawable.round_button_light);
         }
         else
         {
             editURL.setTextColor(Color.parseColor("#f2f2f2"));
             editURL.setHintTextColor(Color.parseColor("#f2f2f2"));
-            btnDownloadMP4.setTextColor(Color.parseColor("#f2f2f2"));
+            editTitle.setTextColor(Color.parseColor("#f2f2f2"));
+            editTitle.setHintTextColor(Color.parseColor("#f2f2f2"));
             btnDownloadMP3.setTextColor(Color.parseColor("#f2f2f2"));
             btnDownloadMP3.setBackgroundResource(R.drawable.round_button_dark);
-            btnDownloadMP4.setBackgroundResource(R.drawable.round_button_dark);
         }
         String CHANNEL_ID = "100";
         CharSequence name = getString(R.string.channel_name);
@@ -72,13 +73,30 @@ public class YoutubeConvertMenu extends AppCompatActivity {
         request();
         menuInstance = this;
 
-        btnDownloadMP4.setOnClickListener((View v) -> {
-            //entfällt bis auf Weiteres
-        });
+
         btnDownloadMP3.setOnClickListener((View v) -> {
             Log.d("DownloadTask", "Button MP3-Download clicked");
-            YoutubeVideoDownloadTask task = new YoutubeVideoDownloadTask(this);
-            task.execute(parseYTURL(url), CHANNEL_ID);
+            YoutubeVideoDownloadTask task = new YoutubeVideoDownloadTask(this,this);
+            final String url = (editURL.getText().toString().trim());
+            boolean valid = true;
+            try {
+                if(url.contains("//www.youtube.com/watch?v=")||url.contains("//youtu.be/"))
+                {
+                    task.execute(parseYTURL(parseYTURL(url)), CHANNEL_ID, editTitle.getText().toString().trim());
+                }
+                else
+                {
+                    valid=false;
+                }
+            }
+            catch(Exception e)
+            {
+                valid=false;
+            }
+            if(!valid)
+            {
+                Toast.makeText(menuInstance, "Invaldid YouTube-Link", Toast.LENGTH_LONG).show();
+            }
         });
     }
 
@@ -88,10 +106,9 @@ public class YoutubeConvertMenu extends AppCompatActivity {
         }
         if(videoID.contains("v=")) {
             videoID = videoID.split("v=")[1];
-        } else {
+        } if(videoID.contains("be/")) {
             videoID = videoID.split("be/")[1];
         }
-        Log.d("DownloadTask", "URL parsed: https://www.youtube.com/watch?v=" + videoID);
         return "https://www.youtube.com/watch?v=" + videoID;
     }
 

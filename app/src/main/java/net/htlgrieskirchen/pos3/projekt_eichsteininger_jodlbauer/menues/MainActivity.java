@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             btnCamera.setImageResource(R.drawable.camera_logo_dark);
         }
         btnYouTube.setOnClickListener((View v) -> {
-            Intent intent = new Intent(this, YoutubeConvertMenu.class);
+            Intent intent = new Intent(this, YouTubeConvertMenu.class);
             startActivity(intent);
         });
         btnCamera.setOnClickListener(new View.OnClickListener() {
