@@ -22,7 +22,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".menues.YouTubeConvertMenu"></activity>
+        <activity android:name=".playlists.YouTubeAudioList"></activity>
+        <activity android:name=".menues.YouTubeConvertMenu" />
         <activity android:name=".mediaplayers.CameraAudioPlayer" />
         <activity android:name=".mediaplayers.CameraVideoViewer" />
         <activity android:name=".menues.CameraSaver" />

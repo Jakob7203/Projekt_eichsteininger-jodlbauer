@@ -9,31 +9,31 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
-import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.CameraResponse;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.YouTubeDownload;
 
 import java.util.List;
 
-public class ListAdapter extends BaseAdapter {
+public class YouTubeAdapter extends BaseAdapter {
     private String TAG = "TAG";
     private Context context;
     private int listViewItemLayoutId;
-    private List<CameraResponse> cameraResponses;
+    private List<YouTubeDownload> youTubeDownloads;
     private LayoutInflater inflater;
-    public ListAdapter(Context context, int listViewItemLayoutId, List<CameraResponse> cameraResponses) {
+    public YouTubeAdapter(Context context, int listViewItemLayoutId, List<YouTubeDownload> youTubeDownloads) {
         this.context=context;
         this.listViewItemLayoutId=listViewItemLayoutId;
-        this.cameraResponses=cameraResponses;
+        this.youTubeDownloads=youTubeDownloads;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return cameraResponses.size();
+        return youTubeDownloads.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return cameraResponses.get(position);
+        return youTubeDownloads.get(position);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View givenView, ViewGroup parent) {
-        CameraResponse playableObject = cameraResponses.get(position);
+        YouTubeDownload youTubeDownload = youTubeDownloads.get(position);
         View listItem = (givenView == null) ? inflater.inflate(this.listViewItemLayoutId, null) : givenView;
         TextView t1 = listItem.findViewById(R.id.spm_title);
         if(Static_Access.mode.equals("light"))
@@ -55,7 +55,7 @@ public class ListAdapter extends BaseAdapter {
         {
             t1.setTextColor(Color.parseColor("#f2f2f2"));
         }
-        String title = playableObject.getTitle();
+        String title = youTubeDownload.getTitle();
         int mark = 20;
         if(title.length()>=mark)
         {
