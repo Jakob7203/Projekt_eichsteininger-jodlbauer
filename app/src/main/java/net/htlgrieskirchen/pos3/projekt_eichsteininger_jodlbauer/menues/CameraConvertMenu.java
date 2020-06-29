@@ -41,8 +41,6 @@ public class CameraConvertMenu extends AppCompatActivity {
     private String TAG = "TAG";
     private String pathCameraAudio = "/sdcard/project_eichsteininger_jodlbauer/ca.json";
     private String pathCameraVideo = "/sdcard/project_eichsteininger_jodlbauer/cv.json";
-    private static final int RQ_CAMERA = 987;
-    private static final int RQ_SDCARD = 707;
     private Button mp3_lib;
     private Button mp4_lib;
     private ImageButton record;
@@ -79,7 +77,7 @@ public class CameraConvertMenu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                 if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takeVideoIntent, RQ_CAMERA);
+                    startActivityForResult(takeVideoIntent, Static_Access.RQ_CAMERA);
                 }
             }
         });
@@ -116,7 +114,7 @@ public class CameraConvertMenu extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode == RQ_CAMERA && resultCode == RESULT_OK) {
+        if (requestCode == Static_Access.RQ_CAMERA && resultCode == RESULT_OK) {
             Uri videoUri = intent.getData();
             Intent i = new Intent(this, CameraSaver.class);
             i.putExtra("URI",videoUri.toString());
@@ -128,14 +126,14 @@ public class CameraConvertMenu extends AppCompatActivity {
         if (checkSelfPermission(Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.CAMERA},
-                    RQ_CAMERA);
+                    Static_Access.RQ_CAMERA);
         } else {
             Log.d(TAG, "permission for Camera already granted");
         }
         if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    RQ_SDCARD);
+                    Static_Access.RQ_SDCARD);
         } else {
             Log.d(TAG, "permission for SD-Card already granted");
         }
@@ -146,14 +144,14 @@ public class CameraConvertMenu extends AppCompatActivity {
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == RQ_CAMERA) {
+        if (requestCode == Static_Access.RQ_CAMERA) {
             if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Log.d(TAG, "permission denied");
             } else {
                 Log.d(TAG, "permission granted");
             }
         }
-        if (requestCode == RQ_SDCARD) {
+        if (requestCode == Static_Access.RQ_SDCARD) {
             if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Log.d(TAG, "permission denied");
             } else {

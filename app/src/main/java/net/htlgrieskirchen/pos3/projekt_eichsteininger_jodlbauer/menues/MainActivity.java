@@ -1,6 +1,8 @@
 package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -74,7 +77,43 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    public void request() {
+        if (checkSelfPermission(Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA},
+                    Static_Access.RQ_CAMERA);
+        } else {
+            Log.d(TAG, "permission for Camera already granted");
+        }
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    Static_Access.RQ_SDCARD);
+        } else {
+            Log.d(TAG, "permission for SD-Card already granted");
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == Static_Access.RQ_CAMERA) {
+            if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG, "permission denied");
+            } else {
+                Log.d(TAG, "permission granted");
+            }
+        }
+        if (requestCode == Static_Access.RQ_SDCARD) {
+            if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG, "permission denied");
+            } else {
+                Log.d(TAG, "permission granted");
+            }
+        }
+    }
     private void readFromFile() {
         try
         {

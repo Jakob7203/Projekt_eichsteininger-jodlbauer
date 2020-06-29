@@ -34,7 +34,6 @@ public class YouTubeSaver extends AppCompatActivity {
     private EditText editURL;
     private EditText editTitle;
     private LinearLayout linearLayout;
-    private static final int RQ_SDCARD = 707;
     public static YouTubeSaver menuInstance = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +126,7 @@ public class YouTubeSaver extends AppCompatActivity {
                 != PackageManager.PERMISSION_GRANTED) {
             // RQ_CAMERA ist just any constant value to identify the request
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    RQ_SDCARD);
+                    Static_Access.RQ_SDCARD);
         } else {
             Log.d(TAG, "permission for SD-Card already granted");
         }
@@ -138,7 +137,7 @@ public class YouTubeSaver extends AppCompatActivity {
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == RQ_SDCARD) {
+        if (requestCode == Static_Access.RQ_SDCARD) {
             if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Log.d(TAG, "permission denied");
             } else {
