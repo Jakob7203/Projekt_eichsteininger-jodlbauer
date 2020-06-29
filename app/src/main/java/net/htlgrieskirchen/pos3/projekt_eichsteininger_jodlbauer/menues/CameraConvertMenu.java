@@ -1,13 +1,10 @@
 package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -122,11 +119,8 @@ public class CameraConvertMenu extends AppCompatActivity {
         if (requestCode == RQ_CAMERA && resultCode == RESULT_OK) {
             Uri videoUri = intent.getData();
             Log.d(TAG, videoUri.toString());
-            String filePath = "file://" + getFilesDir()+File.separator+getPath(this,videoUri);//check if you can convert this back to uri
             Intent i = new Intent(this, CameraSaver.class);
-            i.putExtra("PATH",filePath);
             i.putExtra("URI",videoUri.toString());
-            Log.d(TAG, filePath);
             startActivity(i);
         }
     }
@@ -191,10 +185,9 @@ public class CameraConvertMenu extends AppCompatActivity {
                 JSONArray jsonArray = jsonObject.getJSONArray("list");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject o = (JSONObject) jsonArray.get(i);
-                    String title = o.getString("title");
-                    String path = o.getString("path");
+                    String title = o.getString("title");;
                     String uri = o.getString("uri");
-                    tempcaudio.add(new CameraResponse(title, path, uri));
+                    tempcaudio.add(new CameraResponse(title, uri));
                 }
                 Static_Access.cameraAudios = tempcaudio;
             } catch (Exception e) {
@@ -220,9 +213,8 @@ public class CameraConvertMenu extends AppCompatActivity {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject o = (JSONObject) jsonArray.get(i);
                     String title = o.getString("title");
-                    String path = o.getString("path");
                     String uri = o.getString("uri");
-                    tempcvideo.add(new CameraResponse(title, path, uri));
+                    tempcvideo.add(new CameraResponse(title, uri));
                 }
                 Static_Access.cameraVideos = tempcvideo;
             } catch (Exception e) {
@@ -233,55 +225,5 @@ public class CameraConvertMenu extends AppCompatActivity {
         {
             Log.d(TAG, "Files dont exist yet");
         }
-    }
-    //wird eig. nicht gebraucht//eig schon
-    public static String getPath(final Context context, final Uri uri) {
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-        Log.i("URI",uri+"");
-        String result = uri+"";
-        if (isKitKat && (result.contains("media.documents"))) {
-            String[] ary = result.split("/");
-            int length = ary.length;
-            String imgary = ary[length-1];
-            final String[] dat = imgary.split("%3A");
-            final String docId = dat[1];
-            final String type = dat[0];
-            Uri contentUri = null;
-            if ("image".equals(type)) {
-                contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-            } else if ("video".equals(type)) {
-            } else if ("audio".equals(type)) {
-            }
-            final String selection = "_id=?";
-            final String[] selectionArgs = new String[] {
-                    dat[1]
-            };
-            return getDataColumn(context, contentUri, selection, selectionArgs);
-        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
-            return getDataColumn(context, uri, null, null);
-        }
-        else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            return uri.getPath();
-        }
-        return null;
-    }
-    //wird eig nicht gebraucht
-    public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
-        Cursor cursor = null;
-        final String column = "_data";
-        final String[] projection = {
-                column
-        };
-        try {
-            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
-            if (cursor != null && cursor.moveToFirst()) {
-                final int column_index = cursor.getColumnIndexOrThrow(column);
-                return cursor.getString(column_index);
-            }
-        } finally {
-            if (cursor != null)
-                cursor.close();
-        }
-        return null;
     }
 }

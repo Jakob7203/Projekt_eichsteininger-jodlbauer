@@ -49,11 +49,14 @@ public class CameraSaver extends AppCompatActivity {
         setContentView(R.layout.activity_camera_saver);
         linearLayout =findViewById(R.id.ll_cs);
         Intent i = getIntent();
-        path=i.getStringExtra("PATH");
         uri=i.getStringExtra("URI");
         edit=i.getBooleanExtra("EDIT",false);
         mp3list=i.getBooleanExtra("LIST",false);
         title=findViewById(R.id.cameraTitle);
+        if(edit)
+        {
+            title.setText(i.getStringExtra("TITLE"));
+        }
         saveAsMP3=findViewById(R.id.camera_save_mp3);
         saveAsMP4=findViewById(R.id.camera_save_mp4);
         if(Static_Access.mode.equals("light"))
@@ -78,10 +81,6 @@ public class CameraSaver extends AppCompatActivity {
             public void onClick(View v) {
                 addToList(Static_Access.cameraAudios);
                 writeToFile(true);
-                if(edit)
-                {
-                    writeToFile(false);
-                }
             }
         });
         saveAsMP4.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +116,7 @@ public class CameraSaver extends AppCompatActivity {
     {
         if(!(title.getText().toString().trim().equals("")))
         {
-            CameraResponse c = new CameraResponse(title.getText().toString().trim(),uri,path);
+            CameraResponse c = new CameraResponse(title.getText().toString().trim(),uri);
             list.add(c);
             Collections.sort(list);
             if(edit)
