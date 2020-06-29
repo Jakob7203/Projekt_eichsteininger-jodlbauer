@@ -61,6 +61,7 @@ public class CameraSaver extends AppCompatActivity {
         saveAsMP4=findViewById(R.id.camera_save_mp4);
         if(Static_Access.mode.equals("light"))
         {
+            title.setHintTextColor(Color.parseColor("#0d0d0d"));
             title.setTextColor(Color.parseColor("#0d0d0d"));
             saveAsMP3.setTextColor(Color.parseColor("#0d0d0d"));
             saveAsMP4.setTextColor(Color.parseColor("#0d0d0d"));
@@ -70,6 +71,7 @@ public class CameraSaver extends AppCompatActivity {
         }
         else
         {
+            title.setHintTextColor(Color.parseColor("#f2f2f2"));
             title.setTextColor(Color.parseColor("#f2f2f2"));
             saveAsMP3.setTextColor(Color.parseColor("#f2f2f2"));
             saveAsMP4.setTextColor(Color.parseColor("#f2f2f2"));

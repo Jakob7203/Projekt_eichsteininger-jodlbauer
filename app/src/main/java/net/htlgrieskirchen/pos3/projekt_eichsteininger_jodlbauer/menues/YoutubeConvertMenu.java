@@ -42,6 +42,7 @@ public class YoutubeConvertMenu extends AppCompatActivity {
         Button btnDownloadMP3 = findViewById(R.id.btnDownloadMP3);
         if(Static_Access.mode.equals("light"))
         {
+            editURL.setHintTextColor(Color.parseColor("#0d0d0d"));
             editURL.setTextColor(Color.parseColor("#0d0d0d"));
             btnDownloadMP4.setTextColor(Color.parseColor("#0d0d0d"));
             btnDownloadMP3.setTextColor(Color.parseColor("#0d0d0d"));
@@ -51,6 +52,7 @@ public class YoutubeConvertMenu extends AppCompatActivity {
         else
         {
             editURL.setTextColor(Color.parseColor("#f2f2f2"));
+            editURL.setHintTextColor(Color.parseColor("#f2f2f2"));
             btnDownloadMP4.setTextColor(Color.parseColor("#f2f2f2"));
             btnDownloadMP3.setTextColor(Color.parseColor("#f2f2f2"));
             btnDownloadMP3.setBackgroundResource(R.drawable.round_button_dark);

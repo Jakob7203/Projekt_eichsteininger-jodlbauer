@@ -20,7 +20,9 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects
 
 public class CameraAudioButtonFragment extends Fragment {
     public final static String TAG = CameraAudioButtonFragment.class.getSimpleName();
-    private Button play_pause;
+    private Button play;
+    private Button pause;
+    private Button stop;
     private MediaPlayer player;
     private LinearLayout linearLayout;
     CameraResponse cameraResponse;
@@ -34,34 +36,56 @@ public class CameraAudioButtonFragment extends Fragment {
         intializeViews(view);
         if(Static_Access.mode.equals("light"))
         {
-            play_pause.setBackgroundResource(R.drawable.round_button_light);
-            play_pause.setTextColor(Color.parseColor("#0d0d0d"));
+            play.setBackgroundResource(R.drawable.round_button_light);
+            play.setTextColor(Color.parseColor("#0d0d0d"));
+            pause.setBackgroundResource(R.drawable.round_button_light);
+            pause.setTextColor(Color.parseColor("#0d0d0d"));
+            stop.setBackgroundResource(R.drawable.round_button_light);
+            stop.setTextColor(Color.parseColor("#0d0d0d"));
         }
         else
         {
-            play_pause.setBackgroundResource(R.drawable.round_button_dark);
-            play_pause.setTextColor(Color.parseColor("#f2f2f2"));
+            play.setBackgroundResource(R.drawable.round_button_dark);
+            play.setTextColor(Color.parseColor("#f2f2f2"));
+            pause.setBackgroundResource(R.drawable.round_button_dark);
+            pause.setTextColor(Color.parseColor("#f2f2f2"));
+            stop.setBackgroundResource(R.drawable.round_button_dark);
+            stop.setTextColor(Color.parseColor("#f2f2f2"));
         }
         return view;
     }
 
     private void intializeViews(View view) {
-        play_pause = view.findViewById(R.id.pp_ca);
-        play_pause.setOnClickListener(new View.OnClickListener() {
+        play = view.findViewById(R.id.play_ca);
+        pause = view.findViewById(R.id.pause_ca);
+        stop = view.findViewById(R.id.stop_ca);
+        play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(Static_Access.currentAudio!=null) {
-                    if (player.isPlaying()) {
-                        player.stop();
-                        play_pause.setText("Play");
-                    }
-                    else
+                    player.start();
+                }
+            }
+        });
+        pause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Static_Access.currentAudio!=null) {
+                    player.pause();
+                }
+            }
+        });
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Static_Access.currentAudio!=null) {
+                    if(player!=null)
                     {
-                        Uri u = Uri.parse(cameraResponse.getUri());
-                        player = MediaPlayer.create(context, u);
-                        player.start();
-                        play_pause.setText("Pause");
+                        player.stop();
+                        player.release();
                     }
+                    Uri u = Uri.parse(cameraResponse.getUri());
+                    player = MediaPlayer.create(context, u);
                 }
             }
         });

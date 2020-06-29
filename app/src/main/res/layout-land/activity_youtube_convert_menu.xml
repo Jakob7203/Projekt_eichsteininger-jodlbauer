@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ll_cab"
+    android:id="@+id/ll_ytcm"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backround_light"
     android:orientation="vertical"
-    tools:context=".mediaplayers.CameraAudioButtonFragment">
+    tools:context=".menues.YoutubeConvertMenu">
 
     <TableLayout
         android:layout_width="match_parent"
@@ -15,49 +16,51 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="60dp"
+            android:layout_weight="1">
 
-            <Button
-                android:id="@+id/play_ca"
+            <EditText
+                android:id="@+id/editURL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/round_button_light"
-                android:text="Play"
+                android:ems="10"
+                android:hint="Enter Youtube Link"
+                android:inputType="textPersonName"
+                android:paddingLeft="30px"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="24dp" />
+                android:textColorHint="@android:color/black"
+                android:textSize="34sp" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="50dp">
+            android:layout_weight="1"
+            android:paddingTop="40dp">
 
             <Button
-                android:id="@+id/pause_ca"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/btnDownloadMP4"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="150dp"
                 android:layout_weight="1"
                 android:background="@drawable/round_button_light"
-                android:text="Pause"
+                android:text="Download Video"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="24dp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="50dp">
+                android:textSize="34sp" />
 
             <Button
-                android:id="@+id/stop_ca"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/btnDownloadMP3"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginRight="40dp"
                 android:layout_weight="1"
                 android:background="@drawable/round_button_light"
-                android:text="Stop"
+                android:text="Download Audio"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="24dp" />
+                android:textSize="34sp" />
         </TableRow>
 
     </TableLayout>
