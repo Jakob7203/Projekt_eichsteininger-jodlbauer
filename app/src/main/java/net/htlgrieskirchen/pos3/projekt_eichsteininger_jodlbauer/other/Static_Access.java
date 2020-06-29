@@ -1,11 +1,5 @@
 package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.CameraResponse;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.YouTubeDownload;
 
@@ -18,6 +12,7 @@ public class Static_Access {
     public static CameraResponse currentAudio = null;
     public static CameraResponse currentVideo = null;
     public static List<YouTubeDownload> youTubeAudios = new ArrayList<>();
+    public static YouTubeDownload currentYTAudio = null;
     public static String mode ="light";
     public static final int RQ_SDCARD = 707;
     public static final int RQ_CAMERA = 987;

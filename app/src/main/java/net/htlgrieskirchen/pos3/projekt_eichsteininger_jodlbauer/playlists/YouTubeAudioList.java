@@ -20,14 +20,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
-import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.CameraAudioButtonFragment;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.CameraAudioPlayer;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.YouTubeAudioButtonFragment;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.YouTubeAudioPlayer;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.CameraConvertMenu;
-import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.CameraSaver;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.YouTubeConvertMenu;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.FileUtils;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.CameraResponse;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.YouTubeDownload;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,55 +39,55 @@ import java.io.PrintWriter;
 public class YouTubeAudioList extends AppCompatActivity implements  CameraAudioFragment.OnSelectionChangedListener{
 
     private static final String TAG = "TAG";
-    private CameraAudioButtonFragment rightFragment;
+    private YouTubeAudioButtonFragment rightFragment;
     private boolean showRight = false;
     private LinearLayout linearLayout;
     private ListView lv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera_audio_list);
-        linearLayout = findViewById(R.id.ll_cal);
+        setContentView(R.layout.activity_you_tube_audio_list);
+        linearLayout = findViewById(R.id.ll_yal);
         initializeView();
-        lv = findViewById(R.id.calv);
+        lv = findViewById(R.id.lvya);
         registerForContextMenu(lv);
         //checking if files exist
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CameraResponse c = Static_Access.cameraAudios.get(position);
-                String path = FileUtils.getPath(CameraAudioList.this, Uri.parse(c.getUri()));
+                YouTubeDownload y = Static_Access.youTubeAudios.get(position);
+                String path = FileUtils.getPath(YouTubeAudioList.this, Uri.parse(y.getPath()));//probably need correction
                 try {
                     File f = new File(path);
                     if (f.exists()) {
-                        Intent i = new Intent(CameraAudioList.this, CameraAudioPlayer.class);
-                        i.putExtra("URI", Static_Access.cameraAudios.get(position).getUri());
+                        Intent i = new Intent(YouTubeAudioList.this, YouTubeAudioPlayer.class);
+                        i.putExtra("URI", Static_Access.youTubeAudios.get(position).getLink());
                         startActivity(i);
                     } else {
-                        delete(c);
+                        delete(y);
                     }
                 }
                 catch (Exception e)
                 {
-                    delete(c);
+                    delete(y);
                 }
             }
         });
     }
-    private void delete(CameraResponse c)
+    private void delete(YouTubeDownload y)
     {
-        Toast.makeText(CameraAudioList.this, "The File has been deleted", Toast.LENGTH_LONG).show();
-        Static_Access.cameraAudios.remove(c);
+        Toast.makeText(YouTubeAudioList.this, "The File has been deleted", Toast.LENGTH_LONG).show();
+        Static_Access.youTubeAudios.remove(y);
         writeToFile();
-        lv.setAdapter(new net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.ListAdapter(
-                CameraAudioList.this,
+        lv.setAdapter(new net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.YouTubeAdapter(
+                YouTubeAudioList.this,
                 R.layout.single_playable_media,
-                Static_Access.cameraAudios) {
+                Static_Access.youTubeAudios) {
         });
     }
     private void initializeView() {
         Log.d(TAG, "initializeView: entered");
-        rightFragment = (CameraAudioButtonFragment) getSupportFragmentManager()
+        rightFragment = (YouTubeAudioButtonFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragRight);
         showRight = rightFragment != null && rightFragment.isInLayout();
     }
@@ -97,49 +99,50 @@ public class YouTubeAudioList extends AppCompatActivity implements  CameraAudioF
             getMenuInflater().inflate(R.menu.contextmenu, menu);
             ListView tlv = (ListView) v;
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            CameraResponse obj = (CameraResponse) tlv.getItemAtPosition(acmi.position);
-            Static_Access.currentAudio=obj;
+            YouTubeDownload obj = (YouTubeDownload) tlv.getItemAtPosition(acmi.position);
+            Static_Access.currentYTAudio=obj;
         }
         super.onCreateContextMenu(menu, v, menuInfo);
     }
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.edit_c) {
-            Static_Access.cameraAudios.remove(Static_Access.currentAudio);
+            Static_Access.youTubeAudios.remove(Static_Access.currentYTAudio);
             writeToFile();
-            Intent i = new Intent(this, CameraSaver.class);
-            i.putExtra("URI",Static_Access.currentAudio.getUri());
-            i.putExtra("EDIT",true);
-            i.putExtra("LIST",true);
-            i.putExtra("TITLE",Static_Access.currentAudio.getTitle());
-            startActivity(i);
+            //build an activity similar to YouTubeSaver.java
+//            Intent i = new Intent(this, CameraSaver.class);
+//            i.putExtra("URI",Static_Access.currentAudio.getUri());
+//            i.putExtra("EDIT",true);
+//            i.putExtra("LIST",true);
+//            i.putExtra("TITLE",Static_Access.currentAudio.getTitle());
+//            startActivity(i);
             return true;
         }
         if (item.getItemId() == R.id.delete_c) {
-            String path = FileUtils.getPath(this, Uri.parse(Static_Access.currentAudio.getUri()));
+            String path = (Static_Access.currentYTAudio.getPath());
             File f = new File(path);
-            Static_Access.cameraAudios.remove(Static_Access.currentAudio);
+            Static_Access.youTubeAudios.remove(Static_Access.currentYTAudio);
             writeToFile();
             f.delete();
-            lv.setAdapter(new net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.ListAdapter(
+            lv.setAdapter(new net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.YouTubeAdapter(
                     this,
                     R.layout.single_playable_media,
-                    Static_Access.cameraAudios) {
+                    Static_Access.youTubeAudios) {
             });
             return true;
         }
         return super.onContextItemSelected(item);
     }
     @Override
-    public void onSelectionChanged(CameraResponse item) {
+    public void onSelectionChanged(YouTubeDownload item) {
         if (showRight) rightFragment.play(item, this);
         else callRightActivity(item);
     }
 
-    private void callRightActivity(CameraResponse item) {
+    private void callRightActivity(YouTubeDownload item) {
         Log.d(TAG, "callRightActivity: entered");
         Intent intent = new Intent(this, CameraAudioPlayer.class);
-        Static_Access.currentAudio=item;
+        Static_Access.currentYTAudio=item;
         startActivity(intent);
     }
     @Override
@@ -154,7 +157,7 @@ public class YouTubeAudioList extends AppCompatActivity implements  CameraAudioF
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.onestepback) {
-            startActivity(new Intent(this, CameraConvertMenu.class));//return to the Intent you came from
+            startActivity(new Intent(this, YouTubeConvertMenu.class));//return to the Intent you came from
             finish();
         }
         return super.onOptionsItemSelected(item);
@@ -164,9 +167,9 @@ public class YouTubeAudioList extends AppCompatActivity implements  CameraAudioF
         try {
             PrintWriter out = new PrintWriter(
                     new OutputStreamWriter(
-                            new FileOutputStream("/sdcard/project_eichsteininger_jodlbauer/ca.json")));
+                            new FileOutputStream("/sdcard/project_eichsteininger_jodlbauer/yta.json")));
             Gson gson = new Gson();
-            String toWrite = gson.toJson(Static_Access.cameraAudios);
+            String toWrite = gson.toJson(Static_Access.youTubeAudios);
             Log.d(TAG, toWrite);
             out.print(toWrite);
             out.flush();
