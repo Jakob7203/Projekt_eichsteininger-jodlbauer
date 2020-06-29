@@ -88,14 +88,17 @@ public class Utils {
         byte[] buffer = new byte[BUFFER];
         boolean downloadFinished = false;
 
-        while ((length = in.read(buffer)) > -1) {
-            fos.write(buffer, 0, length);
-            bytesDownloaded += length;
-            percentage = (int) ((bytesDownloaded / totalSize) * 100D);
-            if (percentage != prevPercentage && percentage <= 100) downloadFinished = true;
-            prevPercentage = percentage;
-            updateProgressBar(bar, downloadFinished);
-        }
+        try{
+            while ((length = in.read(buffer)) > -1) {
+                fos.write(buffer, 0, length);
+                bytesDownloaded += length;
+                percentage = (int) ((bytesDownloaded / totalSize) * 100D);
+                if (percentage != prevPercentage && percentage <= 100) downloadFinished = true;
+                prevPercentage = percentage;
+                updateProgressBar(bar, downloadFinished);
+            }
+        } catch (Exception e) {}
+
 
         fos.close();
         in.close();
