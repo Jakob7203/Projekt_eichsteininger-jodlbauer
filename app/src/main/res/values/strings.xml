@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Projekt-Eichsteininger-Jodlbauer</string>
+    <string name="app_name">50% YouTube-Converter</string>
     <string name="title_activity_camera_video_list">CameraVideoList</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
