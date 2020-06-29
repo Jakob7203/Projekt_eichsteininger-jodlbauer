@@ -23,12 +23,10 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.CameraAudioPlayer;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.YouTubeAudioButtonFragment;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.YouTubeAudioPlayer;
-import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.CameraConvertMenu;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.YouTubeConvertMenu;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.FileUtils;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
-import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.CameraResponse;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.YouTubeDownload;
 
 import java.io.File;
@@ -36,7 +34,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
-public class YouTubeAudioList extends AppCompatActivity implements  CameraAudioFragment.OnSelectionChangedListener{
+public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudioFragment.OnSelectionChangedListener{
 
     private static final String TAG = "TAG";
     private YouTubeAudioButtonFragment rightFragment;
@@ -109,7 +107,7 @@ public class YouTubeAudioList extends AppCompatActivity implements  CameraAudioF
         if (item.getItemId() == R.id.edit_c) {
             Static_Access.youTubeAudios.remove(Static_Access.currentYTAudio);
             writeToFile();
-            //build an activity similar to YouTubeSaver.java
+            //build an alert dialog similar to YouTubeSaver.java
 //            Intent i = new Intent(this, CameraSaver.class);
 //            i.putExtra("URI",Static_Access.currentAudio.getUri());
 //            i.putExtra("EDIT",true);

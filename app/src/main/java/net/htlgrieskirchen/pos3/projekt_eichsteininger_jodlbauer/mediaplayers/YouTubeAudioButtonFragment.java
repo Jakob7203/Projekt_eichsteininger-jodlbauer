@@ -16,23 +16,25 @@ import androidx.fragment.app.Fragment;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
-import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.CameraResponse;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.YouTubeDownload;
+
+import java.io.File;
 
 public class YouTubeAudioButtonFragment extends Fragment {
-    public final static String TAG = CameraAudioButtonFragment.class.getSimpleName();
+    public final static String TAG = "TAG";
     private Button play;
     private Button pause;
     private Button stop;
     private MediaPlayer player;
     private LinearLayout linearLayout;
-    CameraResponse cameraResponse;
+    YouTubeDownload youTubeDownload;
     Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_camera_audio_button, container, false);
-        linearLayout = view.findViewById(R.id.ll_cab);
+        View view = inflater.inflate(R.layout.fragment_you_tube_audio_button, container, false);
+        linearLayout = view.findViewById(R.id.ll_yab);
         InflaterHelper.inflateLL(linearLayout);
         intializeViews(view);
         if (Static_Access.mode.equals("light")) {
@@ -54,9 +56,9 @@ public class YouTubeAudioButtonFragment extends Fragment {
     }
 
     private void intializeViews(View view) {
-        play = view.findViewById(R.id.play_ca);
-        pause = view.findViewById(R.id.pause_ca);
-        stop = view.findViewById(R.id.stop_ca);
+        play = view.findViewById(R.id.play_ya);
+        pause = view.findViewById(R.id.pause_ya);
+        stop = view.findViewById(R.id.stop_ya);
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +83,7 @@ public class YouTubeAudioButtonFragment extends Fragment {
                         player.stop();
                         player.release();
                     }
-                    Uri u = Uri.parse(cameraResponse.getUri());
+                    Uri u = Uri.fromFile(new File(youTubeDownload.getPath()));
                     player = MediaPlayer.create(context, u);
                 }
             }
@@ -93,10 +95,10 @@ public class YouTubeAudioButtonFragment extends Fragment {
         super.onStart();
     }
 
-    public void play(CameraResponse item, Context c) {
-        cameraResponse = item;
+    public void play(YouTubeDownload item, Context c) {
+        youTubeDownload = item;
         context = c;
-        Uri u = Uri.parse(item.getUri());
+        Uri u = Uri.fromFile(new File(youTubeDownload.getPath()));
         player = MediaPlayer.create(c, u);
     }
 }
