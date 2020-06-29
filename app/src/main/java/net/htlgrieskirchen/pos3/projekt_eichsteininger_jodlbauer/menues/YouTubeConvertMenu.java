@@ -3,6 +3,7 @@ package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,11 +17,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.YouTubeDownload;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class YouTubeConvertMenu extends AppCompatActivity {
     private LinearLayout linearLayout;
     private Button ytLib;
     private Button convertNew;
+    private String TAG = "TAG";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,5 +85,41 @@ public class YouTubeConvertMenu extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void readFromFile() {
+        try {
+            File file = new File("/sdcard/project_eichsteininger_jodlbauer/yta.json");
+            String text = "";
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    text += (line);
+                }
+                br.close();
+                text = "{\"list\":" + text + "}";
+            } catch (IOException e) {
+                Log.d(TAG, "read failed");
+            }
+            try {
+                List<YouTubeDownload> youTubeDownloads = new ArrayList<>();
+                JSONObject jsonObject = new JSONObject(text);
+                JSONArray jsonArray = jsonObject.getJSONArray("list");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject o = (JSONObject) jsonArray.get(i);
+                    String title = o.getString("title");;
+                    String path = o.getString("path");
+                    String link = o.getString("link");
+                    youTubeDownloads.add(new YouTubeDownload(title, path,link));
+                }
+                Static_Access.youTubeAudios = youTubeDownloads;
+            } catch (Exception e) {
+                Log.d(TAG, "Something went wrong");
+            }
+        }
+        catch (Exception e)
+        {
+            Log.d(TAG, "Files dont exist yet");
+        }
     }
 }

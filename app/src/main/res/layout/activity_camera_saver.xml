@@ -16,7 +16,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="100dp">
+            android:layout_marginTop="50dp">
 
             <EditText
                 android:id="@+id/cameraTitle"
@@ -41,7 +41,7 @@
                 android:id="@+id/camera_save_mp3"
                 android:layout_width="wrap_content"
                 android:layout_height="200px"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="50dp"
                 android:layout_weight="1"
                 android:background="@drawable/round_button_light"
                 android:text="Save as Audio"
@@ -57,7 +57,7 @@
                 android:id="@+id/camera_save_mp4"
                 android:layout_width="wrap_content"
                 android:layout_height="200px"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="50dp"
                 android:layout_weight="1"
                 android:background="@drawable/round_button_light"
                 android:text="Save as Video"
