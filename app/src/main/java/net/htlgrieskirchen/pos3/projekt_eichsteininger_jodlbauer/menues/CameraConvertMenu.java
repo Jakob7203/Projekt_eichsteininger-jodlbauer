@@ -15,12 +15,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.FileUtils;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.CameraResponse;
@@ -118,7 +120,9 @@ public class CameraConvertMenu extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == RQ_CAMERA && resultCode == RESULT_OK) {
             Uri videoUri = intent.getData();
-            Log.d(TAG, videoUri.toString());
+            String path = FileUtils.getPath(this, videoUri);
+            File f = new File(path);
+            Toast.makeText(this, f.getPath(), Toast.LENGTH_LONG).show();
             Intent i = new Intent(this, CameraSaver.class);
             i.putExtra("URI",videoUri.toString());
             startActivity(i);

@@ -24,6 +24,7 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.Ca
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.CameraAudioPlayer;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.CameraConvertMenu;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.CameraSaver;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.FileUtils;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.CameraResponse;
@@ -53,9 +54,9 @@ public class CameraAudioList extends AppCompatActivity implements  CameraAudioFr
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CameraResponse c = Static_Access.cameraAudios.get(position);
-                String path = Uri.parse(c.getUri()).getPath();
+                String path = FileUtils.getPath(CameraAudioList.this, Uri.parse(c.getUri()));
                 File f = new File(path);
-                Toast.makeText(CameraAudioList.this, path , Toast.LENGTH_LONG).show();
+                Toast.makeText(CameraAudioList.this, f.getPath() , Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -93,7 +94,8 @@ public class CameraAudioList extends AppCompatActivity implements  CameraAudioFr
             return true;
         }
         if (item.getItemId() == R.id.delete_c) {
-            File f = new File(Uri.parse(Static_Access.currentAudio.getUri()).getPath());
+            String path = FileUtils.getPath(this, Uri.parse(Static_Access.currentVideo.getUri()));
+            File f = new File(path);
             Static_Access.cameraAudios.remove(Static_Access.currentAudio);
             writeToFile();
             f.delete();

@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.CameraConvertMenu;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.CameraSaver;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.FileUtils;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.ListAdapter;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
@@ -50,9 +51,9 @@ public class CameraVideoList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
                 CameraResponse c = Static_Access.cameraVideos.get(pos);
-                String path = Uri.parse(c.getUri()).getPath();
+                String path = FileUtils.getPath(CameraVideoList.this, Uri.parse(c.getUri()));
                 File f = new File(path);
-                Toast.makeText(CameraVideoList.this, ""+f.getPath() , Toast.LENGTH_LONG).show();
+                Toast.makeText(CameraVideoList.this, f.getPath() , Toast.LENGTH_LONG).show();
                 /*if(f.exists())
                 {
                     Intent i = new Intent(CameraVideoList.this, CameraVideoViewer.class);
@@ -118,7 +119,8 @@ public class CameraVideoList extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.delete_c) {
-            File f = new File(Uri.parse(Static_Access.currentVideo.getUri()).getPath());
+            String path = FileUtils.getPath(this, Uri.parse(Static_Access.currentVideo.getUri()));
+            File f = new File(path);
             Static_Access.cameraVideos.remove(Static_Access.currentVideo);
             writeToFile();
             f.delete();
