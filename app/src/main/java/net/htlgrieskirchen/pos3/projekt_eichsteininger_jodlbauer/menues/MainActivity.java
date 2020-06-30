@@ -39,8 +39,10 @@ public class MainActivity extends AppCompatActivity {
         ImageButton btnYouTube = findViewById(R.id.btnYouTube);
         ImageButton btnCamera = findViewById(R.id.btnCamera);
         if (Static_Access.mode.equals("light")) {
+            btnYouTube.setImageResource(R.drawable.yt_logo_light);
             btnCamera.setImageResource(R.drawable.camera_logo_light);
         } else {
+            btnYouTube.setImageResource(R.drawable.yt_logo_dark);
             btnCamera.setImageResource(R.drawable.camera_logo_dark);
         }
         btnYouTube.setOnClickListener((View v) -> {

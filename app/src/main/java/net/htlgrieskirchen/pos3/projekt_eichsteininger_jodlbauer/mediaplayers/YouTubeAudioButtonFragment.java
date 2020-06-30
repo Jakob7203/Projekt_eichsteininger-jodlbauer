@@ -63,7 +63,13 @@ public class YouTubeAudioButtonFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (Static_Access.currentYTAudio != null) {
-                        player.start();
+                        try {
+                            player.start();
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
                     }
                 }
             });
