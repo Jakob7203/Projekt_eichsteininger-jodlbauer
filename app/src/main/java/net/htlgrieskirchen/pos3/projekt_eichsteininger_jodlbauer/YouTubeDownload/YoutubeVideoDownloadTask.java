@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.Collections;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -68,6 +69,7 @@ public class YoutubeVideoDownloadTask extends AsyncTask<String, String, String> 
             File f = new File(mp3File);
             if (!f.exists()) {
                 Static_Access.youTubeAudios.add(new YouTubeDownload(songTitle, path,parameters[0]));
+                Collections.sort(Static_Access.youTubeAudios);
                 writeToFile();
                 Utils.download(song.getDownload(), mp3File);
             } else {

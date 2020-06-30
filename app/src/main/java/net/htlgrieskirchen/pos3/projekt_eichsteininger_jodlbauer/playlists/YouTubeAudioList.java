@@ -2,7 +2,6 @@ package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +31,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.Collections;
 
 public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudioFragment.OnSelectionChangedListener{
 
@@ -77,7 +77,7 @@ public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudio
         writeToFile();
         setAdapter();
     }
-    private void setAdapter()
+    public void setAdapter()
     {
         lv.setAdapter(new net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.YouTubeAdapter(
                 YouTubeAudioList.this,
@@ -108,7 +108,6 @@ public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudio
         if (item.getItemId() == R.id.edit_c) {
             YouTubeEditDialog youTubeEditDialog = new YouTubeEditDialog(this);
             youTubeEditDialog.show();
-            writeToFile();
             return true;
         }
         if (item.getItemId() == R.id.delete_c) {
@@ -117,11 +116,7 @@ public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudio
             Static_Access.youTubeAudios.remove(Static_Access.currentYTAudio);
             writeToFile();
             f.delete();
-            lv.setAdapter(new net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.YouTubeAdapter(
-                    this,
-                    R.layout.single_playable_media,
-                    Static_Access.youTubeAudios) {
-            });
+            setAdapter();
             return true;
         }
         return super.onContextItemSelected(item);
@@ -154,7 +149,7 @@ public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudio
         }
         return super.onOptionsItemSelected(item);
     }
-    private void writeToFile()
+    public static void writeToFile()
     {
         try {
             PrintWriter out = new PrintWriter(

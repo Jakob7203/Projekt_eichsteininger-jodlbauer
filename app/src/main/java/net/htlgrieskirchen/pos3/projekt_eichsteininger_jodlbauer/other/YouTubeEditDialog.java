@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists.YouTubeAudioList;
+
+import java.util.Collections;
 
 public class YouTubeEditDialog extends Dialog implements android.view.View.OnClickListener {
 
@@ -30,7 +33,7 @@ public class YouTubeEditDialog extends Dialog implements android.view.View.OnCli
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_dialog);
-        ok = (Button) findViewById(R.id.dialog_button);
+        ok = findViewById(R.id.dialog_button);
         ok.setOnClickListener(this);
         title_editor=findViewById(R.id.dialog_edit);
         linearLayout=findViewById(R.id.ll_dialog);
@@ -52,7 +55,22 @@ public class YouTubeEditDialog extends Dialog implements android.view.View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.dialog_button:
-                //make a static YT-Download, change it, save it and update Adapter
+                if(!title_editor.getText().toString().trim().equals(""))
+                {
+                    for (int i = 0; i < Static_Access.youTubeAudios.size(); i++) {
+                        if(Static_Access.youTubeAudios.get(i).getLink().equals(Static_Access.currentYTAudio))
+                        {
+                            Static_Access.youTubeAudios.get(i).setTitle(title_editor.getText().toString().trim());
+                            Collections.sort(Static_Access.youTubeAudios);
+                            if(c instanceof YouTubeAudioList)
+                            {
+                                ((YouTubeAudioList) c).setAdapter();
+                            }
+                            YouTubeAudioList.writeToFile();
+                            break;
+                        }
+                    }
+                }
                 c.finish();
                 break;
             default:
