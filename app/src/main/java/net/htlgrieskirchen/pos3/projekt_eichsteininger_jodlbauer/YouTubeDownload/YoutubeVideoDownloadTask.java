@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
@@ -71,13 +72,14 @@ public class YoutubeVideoDownloadTask extends AsyncTask<String, String, String> 
                 Static_Access.youTubeAudios.add(new YouTubeDownload(songTitle, path,parameters[0]));
                 Collections.sort(Static_Access.youTubeAudios);
                 writeToFile();
-                Utils.download(song.getDownload(), mp3File);
+                Utils.download(song.getDownload(), mp3File, YouTubeSaver.prgDownload);
             } else {
                 notify = false;
                 a.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Toast.makeText(c, "A file with that name already exists", Toast.LENGTH_LONG).show();
+                        YouTubeSaver.prgDownload.setVisibility(View.INVISIBLE);
                     }
                 });
             }

@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ public class YouTubeSaver extends AppCompatActivity {
     private EditText editURL;
     private EditText editTitle;
     private LinearLayout linearLayout;
+    public static ProgressBar prgDownload = null;
     public static YouTubeSaver menuInstance = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class YouTubeSaver extends AppCompatActivity {
         linearLayout = findViewById(R.id.ll_yts);
         editURL = findViewById(R.id.editURL);
         editTitle=findViewById(R.id.edit_YT_Title);
+        prgDownload = findViewById(R.id.prgDownload);
         Button btnDownloadMP3 = findViewById(R.id.btnDownloadMP3);
         if(Static_Access.mode.equals("light"))
         {
@@ -60,6 +63,14 @@ public class YouTubeSaver extends AppCompatActivity {
             btnDownloadMP3.setTextColor(Color.parseColor("#f2f2f2"));
             btnDownloadMP3.setBackgroundResource(R.drawable.round_button_dark);
         }
+        try {
+            Bundle extras = getIntent().getExtras();
+            String value = extras.getString(Intent.EXTRA_TEXT);
+            editURL.setText(value);
+        }
+        catch(Exception e)
+        {
+        }
         String CHANNEL_ID = "100";
         CharSequence name = getString(R.string.channel_name);
         String description = getString(R.string.channel_description);
@@ -69,14 +80,10 @@ public class YouTubeSaver extends AppCompatActivity {
         NotificationManager notificationManager = getSystemService(
                 NotificationManager.class);
         notificationManager.createNotificationChannel(channel);
-
-
         request();
         menuInstance = this;
-
-
         btnDownloadMP3.setOnClickListener((View v) -> {
-            Log.d("DownloadTask", "Button MP3-Download clicked");
+            prgDownload.setVisibility(View.VISIBLE);
             YoutubeVideoDownloadTask task = new YoutubeVideoDownloadTask(this,this);
             final String url = (editURL.getText().toString().trim());
             boolean valid = true;
@@ -107,7 +114,22 @@ public class YouTubeSaver extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    public void onResume(){
+        super.onResume();
+        try {
+            Bundle extras = getIntent().getExtras();
+            String value = extras.getString(Intent.EXTRA_TEXT);
+            editURL.setText(value);
+        }
+        catch(Exception e)
+        {
+        }
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+    }
     private String parseYTURL(String videoID) {
         if(videoID.contains("&")) {
             videoID = videoID.split("&")[0];
