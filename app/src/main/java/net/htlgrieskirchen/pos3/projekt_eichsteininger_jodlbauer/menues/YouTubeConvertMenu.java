@@ -3,7 +3,6 @@ package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,7 +33,6 @@ public class YouTubeConvertMenu extends AppCompatActivity {
     private LinearLayout linearLayout;
     private Button ytLib;
     private Button convertNew;
-    private String TAG = "TAG";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +99,6 @@ public class YouTubeConvertMenu extends AppCompatActivity {
                 br.close();
                 text = "{\"list\":" + text + "}";
             } catch (IOException e) {
-                Log.d(TAG, "read failed");
             }
             try {
                 List<YouTubeDownload> youTubeDownloads = new ArrayList<>();
@@ -116,12 +113,10 @@ public class YouTubeConvertMenu extends AppCompatActivity {
                 }
                 Static_Access.youTubeAudios = youTubeDownloads;
             } catch (Exception e) {
-                Log.d(TAG, "Something went wrong");
             }
         }
         catch (Exception e)
         {
-            Log.d(TAG, "Files dont exist yet");
         }
     }
 }

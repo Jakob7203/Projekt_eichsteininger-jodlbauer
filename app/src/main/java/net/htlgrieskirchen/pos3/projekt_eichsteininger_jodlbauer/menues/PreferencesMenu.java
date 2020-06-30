@@ -25,7 +25,6 @@ public class PreferencesMenu extends AppCompatActivity {
     private SharedPreferences prefs;
     private LinearLayout linearLayout;
     private String path = "/sdcard/project_eichsteininger_jodlbauer/preferences.txt";
-    private String TAG = "TAG";
     //private SharedPreferences.OnSharedPreferenceChangeListener preferencesChangeListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +73,10 @@ public class PreferencesMenu extends AppCompatActivity {
             PrintWriter out = new PrintWriter(
                     new OutputStreamWriter(
                             new FileOutputStream(path)));
-            Log.d(TAG, toWrite);
             out.print(toWrite);
             out.flush();
             out.close();
         } catch (Exception e) {
-            Log.d(TAG, "write failed");
         }
     }
 }

@@ -3,11 +3,9 @@ package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,12 +17,10 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists.YouTubeAudioList;
 
 public class YouTubeAudioPlayer extends AppCompatActivity {
-    private static final String TAG = CameraAudioPlayer.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate: entered");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_experimental_audio_player);
+        setContentView(R.layout.youtube_audio_player);
         int orientation = getResources().getConfiguration().orientation;
         if (orientation != Configuration.ORIENTATION_PORTRAIT) {
             finish();
@@ -34,14 +30,12 @@ public class YouTubeAudioPlayer extends AppCompatActivity {
     }
 
     private void handleIntent() {
-        Log.d(TAG, "handleIntent: entered");
         Intent intent = getIntent();
         if (intent == null) return;
         YouTubeAudioButtonFragment rightFragment = (YouTubeAudioButtonFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.yt_frag_right);
         YouTubeDownload item = Static_Access.currentYTAudio;
-        Toast.makeText(this, ""+(item==null), Toast.LENGTH_SHORT).show();
-        //rightFragment.play(item, this);
+        rightFragment.play(item, this);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

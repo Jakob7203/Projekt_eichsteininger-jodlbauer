@@ -9,8 +9,6 @@ public class CameraResponse implements Comparable<CameraResponse>{
         this.uri=uri;
     }
 
-    
-
     public String getTitle() {
         return title;
     }
@@ -19,8 +17,6 @@ public class CameraResponse implements Comparable<CameraResponse>{
         this.title = title;
     }
 
-
-
     public String getUri() {
         return uri;
     }
@@ -28,7 +24,6 @@ public class CameraResponse implements Comparable<CameraResponse>{
     public void setUri(String uri) {
         this.uri = uri;
     }
-
 
     @Override
     public int compareTo(CameraResponse o) {

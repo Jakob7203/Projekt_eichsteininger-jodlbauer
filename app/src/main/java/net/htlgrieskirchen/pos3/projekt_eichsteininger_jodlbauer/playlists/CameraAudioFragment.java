@@ -15,7 +15,6 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Ac
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.CameraResponse;
 
 public class CameraAudioFragment extends Fragment {
-    private static final String TAG = "TAG";
     private ListView list;
     OnSelectionChangedListener listener;
 

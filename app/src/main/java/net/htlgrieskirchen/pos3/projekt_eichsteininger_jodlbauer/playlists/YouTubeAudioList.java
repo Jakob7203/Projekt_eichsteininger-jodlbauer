@@ -35,7 +35,6 @@ import java.io.PrintWriter;
 
 public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudioFragment.OnSelectionChangedListener{
 
-    private static final String TAG = "TAG";
     private YouTubeAudioButtonFragment rightFragment;
     private boolean showRight = false;
     private LinearLayout linearLayout;
@@ -87,9 +86,8 @@ public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudio
         });
     }
     private void initializeView() {
-        Log.d(TAG, "initializeView: entered");
         rightFragment = (YouTubeAudioButtonFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.fragRight);
+                .findFragmentById(R.id.yt_frag_right);
         showRight = rightFragment != null && rightFragment.isInLayout();
     }
     @Override
@@ -110,7 +108,6 @@ public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudio
         if (item.getItemId() == R.id.edit_c) {
             YouTubeEditDialog youTubeEditDialog = new YouTubeEditDialog(this);
             youTubeEditDialog.show();
-            Log.d(TAG, "dilog finished ?");
             writeToFile();
             return true;
         }
@@ -136,7 +133,6 @@ public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudio
     }
 
     private void callRightActivity(YouTubeDownload item) {
-        Log.d(TAG, "callRightActivity: entered");
         Intent intent = new Intent(this, CameraAudioPlayer.class);
         Static_Access.currentYTAudio=item;
         startActivity(intent);
@@ -166,12 +162,10 @@ public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudio
                             new FileOutputStream("/sdcard/project_eichsteininger_jodlbauer/yta.json")));
             Gson gson = new Gson();
             String toWrite = gson.toJson(Static_Access.youTubeAudios);
-            Log.d(TAG, toWrite);
             out.print(toWrite);
             out.flush();
             out.close();
         } catch (Exception e) {
-            Log.d(TAG, "write failed");
         }
     }
 }

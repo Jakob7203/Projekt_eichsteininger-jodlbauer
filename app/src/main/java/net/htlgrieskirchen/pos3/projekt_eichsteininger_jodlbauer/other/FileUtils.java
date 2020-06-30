@@ -19,18 +19,6 @@ import java.io.InputStream;
 
 public class FileUtils {
     private static Uri contentUri = null;
-
-    /**
-     * Get a file path from a Uri. This will get the the path for Storage Access
-     * Framework Documents, as well as the _data field for the MediaStore and
-     * other file-based ContentProviders.<br>
-     * <br>
-     * Callers should check whether the path is local before assuming it
-     * represents a local file.
-     *
-     * @param context The context.
-     * @param uri     The Uri to query.
-     */
     @SuppressLint("NewApi")
     public static String getPath(final Context context, final Uri uri) {
         // check here to KITKAT or new version

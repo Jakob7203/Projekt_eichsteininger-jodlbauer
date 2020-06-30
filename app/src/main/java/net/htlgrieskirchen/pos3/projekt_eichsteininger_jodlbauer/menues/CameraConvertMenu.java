@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,7 +37,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CameraConvertMenu extends AppCompatActivity {
-    private String TAG = "TAG";
     private String pathCameraAudio = "/sdcard/project_eichsteininger_jodlbauer/ca.json";
     private String pathCameraVideo = "/sdcard/project_eichsteininger_jodlbauer/cv.json";
     private Button mp3_lib;
@@ -128,14 +126,12 @@ public class CameraConvertMenu extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.CAMERA},
                     Static_Access.RQ_CAMERA);
         } else {
-            Log.d(TAG, "permission for Camera already granted");
         }
         if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     Static_Access.RQ_SDCARD);
         } else {
-            Log.d(TAG, "permission for SD-Card already granted");
         }
     }
 
@@ -146,16 +142,16 @@ public class CameraConvertMenu extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == Static_Access.RQ_CAMERA) {
             if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG, "permission denied");
+                //close the app?
             } else {
-                Log.d(TAG, "permission granted");
+
             }
         }
         if (requestCode == Static_Access.RQ_SDCARD) {
             if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG, "permission denied");
+                //close the app?
             } else {
-                Log.d(TAG, "permission granted");
+
             }
         }
     }
@@ -174,7 +170,6 @@ public class CameraConvertMenu extends AppCompatActivity {
                 br.close();
                 text = "{\"list\":" + text + "}";
             } catch (IOException e) {
-                Log.d(TAG, "read failed");
             }
             try {
                 List<CameraResponse> tempcaudio = new ArrayList<>();
@@ -188,7 +183,6 @@ public class CameraConvertMenu extends AppCompatActivity {
                 }
                 Static_Access.cameraAudios = tempcaudio;
             } catch (Exception e) {
-                Log.d(TAG, "Something went wrong");
             }
             file = new File(pathCameraVideo);
             text = "";
@@ -201,7 +195,6 @@ public class CameraConvertMenu extends AppCompatActivity {
                 br.close();
                 text = "{\"list\":" + text + "}";
             } catch (IOException e) {
-                Log.d(TAG, "read failed");
             }
             try {
                 List<CameraResponse> tempcvideo = new ArrayList<>();
@@ -215,12 +208,10 @@ public class CameraConvertMenu extends AppCompatActivity {
                 }
                 Static_Access.cameraVideos = tempcvideo;
             } catch (Exception e) {
-                Log.d(TAG, "Something went wrong");
             }
         }
         catch (Exception e)
         {
-            Log.d(TAG, "Files dont exist yet");
         }
     }
 }

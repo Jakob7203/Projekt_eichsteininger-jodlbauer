@@ -36,7 +36,6 @@ import java.io.PrintWriter;
 
 public class CameraAudioList extends AppCompatActivity implements  CameraAudioFragment.OnSelectionChangedListener{
 
-    private static final String TAG = "TAG";
     private CameraAudioButtonFragment rightFragment;
     private boolean showRight = false;
     private LinearLayout linearLayout;
@@ -84,7 +83,6 @@ public class CameraAudioList extends AppCompatActivity implements  CameraAudioFr
         });
     }
     private void initializeView() {
-        Log.d(TAG, "initializeView: entered");
         rightFragment = (CameraAudioButtonFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragRight);
         showRight = rightFragment != null && rightFragment.isInLayout();
@@ -137,7 +135,6 @@ public class CameraAudioList extends AppCompatActivity implements  CameraAudioFr
     }
 
     private void callRightActivity(CameraResponse item) {
-        Log.d(TAG, "callRightActivity: entered");
         Intent intent = new Intent(this, CameraAudioPlayer.class);
         Static_Access.currentAudio=item;
         startActivity(intent);
@@ -167,12 +164,10 @@ public class CameraAudioList extends AppCompatActivity implements  CameraAudioFr
                             new FileOutputStream("/sdcard/project_eichsteininger_jodlbauer/ca.json")));
             Gson gson = new Gson();
             String toWrite = gson.toJson(Static_Access.cameraAudios);
-            Log.d(TAG, toWrite);
             out.print(toWrite);
             out.flush();
             out.close();
         } catch (Exception e) {
-            Log.d(TAG, "write failed");
         }
     }
 }

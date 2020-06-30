@@ -52,7 +52,7 @@ public class YouTubeEditDialog extends Dialog implements android.view.View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.dialog_button:
-                //make a static YT-Download, change it, save it and update Adapter tomorrow in school
+                //make a static YT-Download, change it, save it and update Adapter
                 c.finish();
                 break;
             default:

@@ -35,7 +35,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
 public class CameraVideoList extends AppCompatActivity {
-    private String TAG = "TAG";
     private ListAdapter adapter;
     private ListView listView;
     private LinearLayout linearLayout;
@@ -148,12 +147,10 @@ public class CameraVideoList extends AppCompatActivity {
                             new FileOutputStream("/sdcard/project_eichsteininger_jodlbauer/cv.json")));
             Gson gson = new Gson();
             String toWrite = gson.toJson(Static_Access.cameraVideos);
-            Log.d(TAG, toWrite);
             out.print(toWrite);
             out.flush();
             out.close();
         } catch (Exception e) {
-            Log.d(TAG, "write failed");
         }
     }
 }

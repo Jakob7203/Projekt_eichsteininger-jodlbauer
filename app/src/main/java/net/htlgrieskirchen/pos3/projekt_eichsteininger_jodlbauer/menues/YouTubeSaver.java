@@ -30,7 +30,6 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterH
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
 
 public class YouTubeSaver extends AppCompatActivity {
-    private String TAG = "TAG";
     private EditText editURL;
     private EditText editTitle;
     private LinearLayout linearLayout;
@@ -128,7 +127,6 @@ public class YouTubeSaver extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     Static_Access.RQ_SDCARD);
         } else {
-            Log.d(TAG, "permission for SD-Card already granted");
         }
     }
 
@@ -139,9 +137,8 @@ public class YouTubeSaver extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == Static_Access.RQ_SDCARD) {
             if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG, "permission denied");
+                //close app?
             } else {
-                Log.d(TAG, "permission granted");
             }
         }
     }

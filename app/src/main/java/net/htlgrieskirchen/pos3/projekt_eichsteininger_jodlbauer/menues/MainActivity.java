@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,7 +25,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
-    private String TAG = "TAG";
     private String path = "/sdcard/project_eichsteininger_jodlbauer/preferences.txt";
     LinearLayout linearLayout;
 
@@ -34,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d(TAG, "starting");
         readFromFile();
+        request();
         linearLayout = findViewById(R.id.ll_main);
         getSupportActionBar().setTitle("");
         ImageButton btnYouTube = findViewById(R.id.btnYouTube);
@@ -83,14 +81,12 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.CAMERA},
                     Static_Access.RQ_CAMERA);
         } else {
-            Log.d(TAG, "permission for Camera already granted");
         }
         if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     Static_Access.RQ_SDCARD);
         } else {
-            Log.d(TAG, "permission for SD-Card already granted");
         }
     }
 
@@ -101,16 +97,14 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == Static_Access.RQ_CAMERA) {
             if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG, "permission denied");
+                //close app?
             } else {
-                Log.d(TAG, "permission granted");
             }
         }
         if (requestCode == Static_Access.RQ_SDCARD) {
             if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG, "permission denied");
+                //close app?
             } else {
-                Log.d(TAG, "permission granted");
             }
         }
     }
@@ -128,13 +122,11 @@ public class MainActivity extends AppCompatActivity {
                 br.close();
                 text = text.replaceAll("\n", "");
             } catch (IOException e) {
-                Log.d(TAG, "read failed");
             }
             Static_Access.mode = text;
         }
         catch (Exception e)
         {
-            Log.d(TAG, "files dont exist");
         }
     }
 }

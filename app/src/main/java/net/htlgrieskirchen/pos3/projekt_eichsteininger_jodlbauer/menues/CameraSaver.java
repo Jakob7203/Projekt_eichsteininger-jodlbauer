@@ -32,8 +32,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class CameraSaver extends AppCompatActivity {
-    private String TAG = "TAG";
-    private String path;
     private String uri;
     private EditText title;
     private Button saveAsMP3;
@@ -152,12 +150,10 @@ public class CameraSaver extends AppCompatActivity {
                                 new FileOutputStream(pathCameraAudio)));
                 Gson gson = new Gson();
                 String toWrite = gson.toJson(Static_Access.cameraAudios);
-                Log.d(TAG, toWrite);
                 out.print(toWrite);
                 out.flush();
                 out.close();
             } catch (Exception e) {
-                Log.d(TAG, "write failed");
             }
         }
         else
@@ -168,12 +164,10 @@ public class CameraSaver extends AppCompatActivity {
                                 new FileOutputStream(pathCameraVideo)));
                 Gson gson = new Gson();
                 String toWrite = gson.toJson(Static_Access.cameraVideos);
-                Log.d(TAG, toWrite);
                 out.print(toWrite);
                 out.flush();
                 out.close();
             } catch (Exception e) {
-                Log.d(TAG, "write failed");
             }
         }
 

@@ -21,7 +21,6 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects
 import java.io.File;
 
 public class YouTubeAudioButtonFragment extends Fragment {
-    public final static String TAG = "TAG";
     private Button play;
     private Button pause;
     private Button stop;
@@ -62,7 +61,7 @@ public class YouTubeAudioButtonFragment extends Fragment {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Static_Access.currentAudio != null) {
+                if (Static_Access.currentYTAudio != null) {
                     player.start();
                 }
             }
@@ -70,7 +69,7 @@ public class YouTubeAudioButtonFragment extends Fragment {
         pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Static_Access.currentAudio != null) {
+                if (Static_Access.currentYTAudio != null) {
                     player.pause();
                 }
             }
@@ -78,7 +77,7 @@ public class YouTubeAudioButtonFragment extends Fragment {
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Static_Access.currentAudio != null) {
+                if (Static_Access.currentYTAudio != null) {
                     if (player != null) {
                         player.stop();
                         player.release();
@@ -98,7 +97,8 @@ public class YouTubeAudioButtonFragment extends Fragment {
     public void play(YouTubeDownload item, Context c) {
         youTubeDownload = item;
         context = c;
-        Uri u = Uri.fromFile(new File(youTubeDownload.getPath()+youTubeDownload.getTitle()+".mp3"));
+        File f = (new File(youTubeDownload.getPath()+youTubeDownload.getTitle()+".mp3"));
+        Uri u = Uri.fromFile(f);
         player = MediaPlayer.create(c, u);
     }
 }

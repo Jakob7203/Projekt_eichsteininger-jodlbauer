@@ -14,7 +14,6 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects
 import java.util.List;
 
 public class YouTubeAdapter extends BaseAdapter {
-    private String TAG = "TAG";
     private Context context;
     private int listViewItemLayoutId;
     private List<YouTubeDownload> youTubeDownloads;

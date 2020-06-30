@@ -19,7 +19,6 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Ac
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.CameraResponse;
 
 public class CameraAudioButtonFragment extends Fragment {
-    public final static String TAG = CameraAudioButtonFragment.class.getSimpleName();
     private Button play;
     private Button pause;
     private Button stop;
