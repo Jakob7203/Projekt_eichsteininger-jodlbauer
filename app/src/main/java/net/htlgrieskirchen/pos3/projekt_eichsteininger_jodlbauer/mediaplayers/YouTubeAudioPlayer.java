@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
-import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.YouTubeDownload;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists.YouTubeAudioList;
 
 public class YouTubeAudioPlayer extends AppCompatActivity {
@@ -34,8 +33,7 @@ public class YouTubeAudioPlayer extends AppCompatActivity {
         if (intent == null) return;
         YouTubeAudioButtonFragment rightFragment = (YouTubeAudioButtonFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.yt_frag_right);
-        YouTubeDownload item = Static_Access.currentYTAudio;
-        rightFragment.play(item, this);
+        rightFragment.play(Static_Access.currentYTAudio, this);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
