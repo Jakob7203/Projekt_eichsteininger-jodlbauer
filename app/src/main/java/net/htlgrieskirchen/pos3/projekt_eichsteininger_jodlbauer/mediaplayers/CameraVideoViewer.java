@@ -9,12 +9,14 @@ import android.view.MenuItem;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists.CameraVideoList;
 
-public class ExperimentalVideoViewer extends AppCompatActivity {
+public class CameraVideoViewer extends AppCompatActivity {
     private VideoView videoView;
     private String uri;
     @Override
@@ -33,7 +35,8 @@ public class ExperimentalVideoViewer extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.headermenu, menu);
-        getSupportActionBar().setTitle("");
+        ActionBar a = getSupportActionBar();
+        InflaterHelper.inflateHeader(a);
         return super.onCreateOptionsMenu(menu);
     }
     @Override

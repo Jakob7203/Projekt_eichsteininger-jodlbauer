@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:layout_width="match_parent"
+        android:defaultValue="light"
+        android:entries="@array/modes"
+        android:entryValues="@array/mode_valuesd"
+        android:key="mode"
+        android:summary="Appearance of the App"
+        android:title="Theme-Changer" />
+</PreferenceScreen>

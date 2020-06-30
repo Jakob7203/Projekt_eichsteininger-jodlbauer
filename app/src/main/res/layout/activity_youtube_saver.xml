@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_yts"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backround_light"
+    android:orientation="vertical"
+    tools:context=".menues.YouTubeSaver">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp">
+
+            <EditText
+                android:id="@+id/editURL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Enter Youtube Link"
+                android:inputType="textPersonName"
+                android:paddingLeft="30px"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColorHint="@android:color/black"
+                android:textSize="34sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp">
+
+            <EditText
+                android:id="@+id/edit_YT_Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Titile (optional)"
+                android:inputType="textPersonName"
+                android:paddingLeft="30px"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColorHint="@android:color/black"
+                android:textSize="34sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ProgressBar
+                android:id="@+id/prgDownload"
+                style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btnDownloadMP3"
+                android:layout_width="match_parent"
+                android:layout_height="200px"
+                android:layout_marginTop="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button_light"
+                android:text="Download as MP3"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="34sp" />
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

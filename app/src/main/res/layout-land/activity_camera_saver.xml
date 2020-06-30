@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_cs"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backround_light"
+    android:orientation="vertical"
+    tools:context=".menues.CameraSaver">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp">
+
+            <EditText
+                android:id="@+id/cameraTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Title"
+                android:inputType="textPersonName"
+                android:paddingLeft="30px"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black"
+                android:textSize="34sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="40dp">
+
+            <Button
+                android:id="@+id/camera_save_mp3"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="200dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button_light"
+                android:text="Save as Audio"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="34sp" />
+
+            <Button
+                android:id="@+id/camera_save_mp4"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginRight="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button_light"
+                android:text="Save as Video"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="34sp" />
+        </TableRow>
+
+    </TableLayout>
+</LinearLayout>

@@ -1,7 +1,7 @@
 package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other;
 
 import android.content.Context;
-import android.util.Log;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +14,6 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects
 import java.util.List;
 
 public class ListAdapter extends BaseAdapter {
-    private String TAG = "TAG";
     private Context context;
     private int listViewItemLayoutId;
     private List<CameraResponse> cameraResponses;
@@ -46,14 +45,25 @@ public class ListAdapter extends BaseAdapter {
         CameraResponse playableObject = cameraResponses.get(position);
         View listItem = (givenView == null) ? inflater.inflate(this.listViewItemLayoutId, null) : givenView;
         TextView t1 = listItem.findViewById(R.id.spm_title);
-        TextView t2 = listItem.findViewById(R.id.spm_created);
-        Log.d(TAG, ""+(t1==null));
-        Log.d(TAG, ""+(t2==null));
-        Log.d(TAG, ""+(playableObject==null));
+        if(Static_Access.mode.equals("light"))
+        {
+            t1.setTextColor(Color.parseColor("#0d0d0d"));
+
+        }
+        else
+        {
+            t1.setTextColor(Color.parseColor("#f2f2f2"));
+        }
         String title = playableObject.getTitle();
-        String date = playableObject.getCreated();
-        t1.setText(title);
-        t2.setText(date);
+        int mark = 20;
+        if(title.length()>=mark)
+        {
+            t1.setText(title.substring(0,mark-3)+"...");
+        }
+        else
+        {
+            t1.setText(title);
+        }
         return listItem;
     }
 }

@@ -1,61 +1,48 @@
 package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.net.Uri;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.CameraResponse;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists.CameraAudioList;
 
-public class ExperimentalAudioPlayer extends AppCompatActivity {
-    private Button play;
-    private Button pause;
-    private String uri;
-    private String TAG = "TAG";
-
+public class CameraAudioPlayer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_experimental_audio_player);
-        Intent i = getIntent();
-        uri=i.getStringExtra("URI");
-        play = findViewById(R.id.play_audio);
-        pause = findViewById(R.id.pause_audio);
-        Uri u = Uri.parse(uri);
-        MediaPlayer player = MediaPlayer.create(this, u);
-        player.start();
-        play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!player.isPlaying())
-                {
-                    player.start();
-                }
-            }
-        });
-        pause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(player.isPlaying())
-                {
-                    player.stop();
-                }
-            }
-        });
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation != Configuration.ORIENTATION_PORTRAIT) {
+            finish();
+            return;
+        }
+        handleIntent();
+    }
+
+    private void handleIntent() {
+        Intent intent = getIntent();
+        if (intent == null) return;
+        CameraAudioButtonFragment rightFragment = (CameraAudioButtonFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.rightfrag);
+        CameraResponse item = Static_Access.currentAudio;
+        rightFragment.play(item, this);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.headermenu, menu);
-        getSupportActionBar().setTitle("");
+        ActionBar a = getSupportActionBar();
+        InflaterHelper.inflateHeader(a);
         return super.onCreateOptionsMenu(menu);
     }
     @Override
