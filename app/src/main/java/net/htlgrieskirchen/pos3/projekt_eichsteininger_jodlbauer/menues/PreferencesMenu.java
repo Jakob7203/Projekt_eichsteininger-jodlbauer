@@ -3,7 +3,6 @@ package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +24,6 @@ public class PreferencesMenu extends AppCompatActivity {
     private SharedPreferences prefs;
     private LinearLayout linearLayout;
     private String path = "/sdcard/project_eichsteininger_jodlbauer/preferences.txt";
-    //private SharedPreferences.OnSharedPreferenceChangeListener preferencesChangeListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +34,6 @@ public class PreferencesMenu extends AppCompatActivity {
                 .commit();
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         linearLayout=findViewById(R.id.ll_pref);
-        //preferencesChangeListener = this::onSharedPreferenceChanged;
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -61,12 +58,6 @@ public class PreferencesMenu extends AppCompatActivity {
         String mode = (prefs.getString("mode", "light"));
         Static_Access.mode=mode;
     }
-//does not work
-//    private void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-//        Toast.makeText(this, "Hello There", Toast.LENGTH_SHORT).show();
-//        String sValue = sharedPreferences.getString(key, "");
-//        Toast.makeText(this, key + " new Value: " + sValue, Toast.LENGTH_LONG).show();
-//    }
     private void savePreferences(String toWrite)
     {
         try {

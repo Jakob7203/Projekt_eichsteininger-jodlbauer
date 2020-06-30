@@ -29,6 +29,7 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
@@ -111,10 +112,20 @@ public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudio
         }
         if (item.getItemId() == R.id.delete_c) {
             String path = (Static_Access.currentYTAudio.getPath());
-            File f = new File(path);
             Static_Access.youTubeAudios.remove(Static_Access.currentYTAudio);
             writeToFile();
-            f.delete();
+            File file = new File(path);
+            file.delete();
+            if (file.exists()){
+                try {
+                    file.getCanonicalFile().delete();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (file.exists()){
+                    deleteFile(file.getName());
+                }
+            }
             setAdapter();
             return true;
         }
@@ -143,7 +154,13 @@ public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudio
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.onestepback) {
-            rightFragment.killMP();
+            try {
+                rightFragment.killMP();
+            }
+            catch(Exception e)
+            {
+
+            }
             startActivity(new Intent(this, YouTubeConvertMenu.class));//return to the Intent you came from
             finish();
         }

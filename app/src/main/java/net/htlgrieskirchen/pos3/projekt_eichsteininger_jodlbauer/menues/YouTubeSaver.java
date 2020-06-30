@@ -164,6 +164,8 @@ public class YouTubeSaver extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == Static_Access.RQ_SDCARD) {
             if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                finish();
+                System.exit(0);
                 //close app?
             } else {
             }

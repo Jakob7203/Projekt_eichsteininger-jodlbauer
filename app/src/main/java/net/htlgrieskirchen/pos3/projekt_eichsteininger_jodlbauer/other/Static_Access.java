@@ -16,5 +16,4 @@ public class Static_Access {
     public static String mode ="light";
     public static final int RQ_SDCARD = 707;
     public static final int RQ_CAMERA = 987;
-
 }

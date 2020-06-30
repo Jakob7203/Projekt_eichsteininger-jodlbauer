@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -123,11 +122,7 @@ public class CameraConvertMenu extends AppCompatActivity {
         }
         catch (Exception e)
         {
-            Toast.makeText(this, "An error occurred, retrying...", Toast.LENGTH_LONG).show();
-            Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-            if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
-                startActivityForResult(takeVideoIntent, Static_Access.RQ_CAMERA);
-            }
+            startActivity(new Intent(this, CameraConvertMenu.class));
         }
     }
 
@@ -153,6 +148,8 @@ public class CameraConvertMenu extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == Static_Access.RQ_CAMERA) {
             if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                finish();
+                System.exit(0);
                 //close the app?
             } else {
 
@@ -160,6 +157,8 @@ public class CameraConvertMenu extends AppCompatActivity {
         }
         if (requestCode == Static_Access.RQ_SDCARD) {
             if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                finish();
+                System.exit(0);
                 //close the app?
             } else {
 
