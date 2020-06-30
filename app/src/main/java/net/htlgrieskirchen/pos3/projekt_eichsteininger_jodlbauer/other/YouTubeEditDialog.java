@@ -39,12 +39,12 @@ public class YouTubeEditDialog extends Dialog implements android.view.View.OnCli
             title_editor.setHintTextColor(Color.parseColor("#0d0d0d"));
             title_editor.setTextColor(Color.parseColor("#0d0d0d"));
             ok.setTextColor(Color.parseColor("#0d0d0d"));
-            ok.setBackgroundResource(R.drawable.round_button_light);
+            ok.setBackgroundColor(Color.parseColor("#f2f2f2f2"));
         } else {
             title_editor.setTextColor(Color.parseColor("#f2f2f2"));
             title_editor.setHintTextColor(Color.parseColor("#f2f2f2"));
             ok.setTextColor(Color.parseColor("#f2f2f2"));
-            ok.setBackgroundResource(R.drawable.round_button_dark);
+            ok.setBackgroundColor(Color.parseColor("#0d0d0d0d"));
         }
     }
 

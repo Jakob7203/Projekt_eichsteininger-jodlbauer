@@ -83,7 +83,7 @@ public class YouTubeAudioButtonFragment extends Fragment {
                         player.stop();
                         player.release();
                     }
-                    Uri u = Uri.fromFile(new File(youTubeDownload.getPath()));
+                    Uri u = Uri.fromFile(new File(youTubeDownload.getPath()+youTubeDownload.getTitle()+".mp3"));
                     player = MediaPlayer.create(context, u);
                 }
             }
@@ -98,7 +98,7 @@ public class YouTubeAudioButtonFragment extends Fragment {
     public void play(YouTubeDownload item, Context c) {
         youTubeDownload = item;
         context = c;
-        Uri u = Uri.fromFile(new File(youTubeDownload.getPath()));
+        Uri u = Uri.fromFile(new File(youTubeDownload.getPath()+youTubeDownload.getTitle()+".mp3"));
         player = MediaPlayer.create(c, u);
     }
 }

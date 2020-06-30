@@ -18,6 +18,7 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.YouTubeDownload;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists.YouTubeAudioList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -55,10 +56,11 @@ public class YouTubeConvertMenu extends AppCompatActivity {
             convertNew.setTextColor(Color.parseColor("#f2f2f2"));
             convertNew.setBackgroundResource(R.drawable.round_button_dark);
         }
+        readFromFile();
         ytLib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(YouTubeConvertMenu.this, YouTubeAudioList.class));
             }
         });
         convertNew.setOnClickListener(new View.OnClickListener() {

@@ -1,7 +1,6 @@
 package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -24,9 +23,9 @@ import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.Ca
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.YouTubeAudioButtonFragment;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.mediaplayers.YouTubeAudioPlayer;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.menues.YouTubeConvertMenu;
-import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.FileUtils;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.YouTubeEditDialog;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.YouTubeDownload;
 
 import java.io.File;
@@ -53,21 +52,21 @@ public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudio
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                YouTubeDownload y = Static_Access.youTubeAudios.get(position);
-                String path = FileUtils.getPath(YouTubeAudioList.this, Uri.parse(y.getPath()));//probably need correction
+                Static_Access.currentYTAudio=Static_Access.youTubeAudios.get(position);
+                String path = Static_Access.currentYTAudio.getPath()+Static_Access.currentYTAudio.getTitle()+".mp3";//exists
+                File f = new File(path);
                 try {
-                    File f = new File(path);
                     if (f.exists()) {
-                        Intent i = new Intent(YouTubeAudioList.this, YouTubeAudioPlayer.class);
-                        i.putExtra("URI", Static_Access.youTubeAudios.get(position).getLink());
-                        startActivity(i);
+                        startActivity(new Intent(YouTubeAudioList.this, YouTubeAudioPlayer.class));
                     } else {
-                        delete(y);
+                        delete(Static_Access.currentYTAudio);
+                        Toast.makeText(YouTubeAudioList.this, "The File has been delted", Toast.LENGTH_LONG).show();
                     }
                 }
                 catch (Exception e)
                 {
-                    delete(y);
+                    delete(Static_Access.currentYTAudio);
+                    Toast.makeText(YouTubeAudioList.this, "Something went wrong", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -77,6 +76,10 @@ public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudio
         Toast.makeText(YouTubeAudioList.this, "The File has been deleted", Toast.LENGTH_LONG).show();
         Static_Access.youTubeAudios.remove(y);
         writeToFile();
+        setAdapter();
+    }
+    private void setAdapter()
+    {
         lv.setAdapter(new net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.YouTubeAdapter(
                 YouTubeAudioList.this,
                 R.layout.single_playable_media,
@@ -93,7 +96,7 @@ public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudio
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         int viewId = v.getId();
-        if (viewId == R.id.calv) {
+        if (viewId == R.id.lvya) {
             getMenuInflater().inflate(R.menu.contextmenu, menu);
             ListView tlv = (ListView) v;
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
@@ -105,15 +108,10 @@ public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudio
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.edit_c) {
-            Static_Access.youTubeAudios.remove(Static_Access.currentYTAudio);
+            YouTubeEditDialog youTubeEditDialog = new YouTubeEditDialog(this);
+            youTubeEditDialog.show();
+            Log.d(TAG, "dilog finished ?");
             writeToFile();
-            //build an alert dialog similar to YouTubeSaver.java
-//            Intent i = new Intent(this, CameraSaver.class);
-//            i.putExtra("URI",Static_Access.currentAudio.getUri());
-//            i.putExtra("EDIT",true);
-//            i.putExtra("LIST",true);
-//            i.putExtra("TITLE",Static_Access.currentAudio.getTitle());
-//            startActivity(i);
             return true;
         }
         if (item.getItemId() == R.id.delete_c) {

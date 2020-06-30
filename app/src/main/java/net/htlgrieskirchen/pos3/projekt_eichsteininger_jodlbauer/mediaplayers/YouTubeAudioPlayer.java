@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.R;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.InflaterHelper;
 import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.other.Static_Access;
-import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.CameraResponse;
-import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists.CameraAudioList;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playableobjects.YouTubeDownload;
+import net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists.YouTubeAudioList;
 
 public class YouTubeAudioPlayer extends AppCompatActivity {
     private static final String TAG = CameraAudioPlayer.class.getSimpleName();
@@ -36,10 +37,11 @@ public class YouTubeAudioPlayer extends AppCompatActivity {
         Log.d(TAG, "handleIntent: entered");
         Intent intent = getIntent();
         if (intent == null) return;
-        CameraAudioButtonFragment rightFragment = (CameraAudioButtonFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.rightfrag);
-        CameraResponse item = Static_Access.currentAudio;
-        rightFragment.play(item, this);
+        YouTubeAudioButtonFragment rightFragment = (YouTubeAudioButtonFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.yt_frag_right);
+        YouTubeDownload item = Static_Access.currentYTAudio;
+        Toast.makeText(this, ""+(item==null), Toast.LENGTH_SHORT).show();
+        //rightFragment.play(item, this);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -53,7 +55,7 @@ public class YouTubeAudioPlayer extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.onestepback) {
-            startActivity(new Intent(this, CameraAudioList.class));//return to the Intent you came from
+            startActivity(new Intent(this, YouTubeAudioList.class));//return to the Intent you came from
             finish();
         }
         return super.onOptionsItemSelected(item);
