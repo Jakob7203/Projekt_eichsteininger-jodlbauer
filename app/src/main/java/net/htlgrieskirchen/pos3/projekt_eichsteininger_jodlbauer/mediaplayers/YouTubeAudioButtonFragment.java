@@ -58,42 +58,58 @@ public class YouTubeAudioButtonFragment extends Fragment {
         play = view.findViewById(R.id.play_ya);
         pause = view.findViewById(R.id.pause_ya);
         stop = view.findViewById(R.id.stop_ya);
-        play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Static_Access.currentYTAudio != null) {
-                    player.start();
-                }
-            }
-        });
-        pause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Static_Access.currentYTAudio != null) {
-                    player.pause();
-                }
-            }
-        });
-        stop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Static_Access.currentYTAudio != null) {
-                    if (player != null) {
-                        player.stop();
-                        player.release();
+        try {
+            play.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (Static_Access.currentYTAudio != null) {
+                        player.start();
                     }
-                    Uri u = Uri.fromFile(new File(youTubeDownload.getPath()+youTubeDownload.getTitle()+".mp3"));
-                    player = MediaPlayer.create(context, u);
                 }
-            }
-        });
+            });
+            pause.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (Static_Access.currentYTAudio != null) {
+                        player.pause();
+                    }
+                }
+            });
+            stop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (Static_Access.currentYTAudio != null) {
+                        if (player != null) {
+                            player.stop();
+                            player.release();
+                        }
+                        Uri u = Uri.fromFile(new File(youTubeDownload.getPath()+youTubeDownload.getTitle()+".mp3"));
+                        player = MediaPlayer.create(context, u);
+                    }
+                }
+            });
+        }
+        catch (Exception e)
+        {
+            //son, just dont
+        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
     }
-
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+    }
+    public  void killMP()
+    {
+        player.stop();
+        player.release();
+        player=null;
+    }
     public void play(YouTubeDownload item, Context c) {
         youTubeDownload = item;
         context = c;

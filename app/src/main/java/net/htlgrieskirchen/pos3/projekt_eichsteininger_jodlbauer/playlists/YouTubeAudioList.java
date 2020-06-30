@@ -31,7 +31,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.util.Collections;
 
 public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudioFragment.OnSelectionChangedListener{
 
@@ -144,6 +143,7 @@ public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudio
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.onestepback) {
+            rightFragment.killMP();
             startActivity(new Intent(this, YouTubeConvertMenu.class));//return to the Intent you came from
             finish();
         }

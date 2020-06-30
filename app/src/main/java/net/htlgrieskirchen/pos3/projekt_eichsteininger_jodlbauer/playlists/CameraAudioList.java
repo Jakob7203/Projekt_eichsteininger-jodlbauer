@@ -3,7 +3,6 @@ package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.playlists;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,8 +51,8 @@ public class CameraAudioList extends AppCompatActivity implements  CameraAudioFr
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CameraResponse c = Static_Access.cameraAudios.get(position);
-                String path = FileUtils.getPath(CameraAudioList.this, Uri.parse(c.getUri()));
+                Static_Access.currentAudio=Static_Access.cameraAudios.get(position);
+                String path = FileUtils.getPath(CameraAudioList.this, Uri.parse(Static_Access.currentAudio.getUri()));
                 try {
                     File f = new File(path);
                     if (f.exists()) {
@@ -61,12 +60,12 @@ public class CameraAudioList extends AppCompatActivity implements  CameraAudioFr
                         i.putExtra("URI", Static_Access.cameraAudios.get(position).getUri());
                         startActivity(i);
                     } else {
-                        delete(c);
+                        delete(Static_Access.currentAudio);
                     }
                 }
                 catch (Exception e)
                 {
-                    delete(c);
+                    delete(Static_Access.currentAudio);
                 }
             }
         });

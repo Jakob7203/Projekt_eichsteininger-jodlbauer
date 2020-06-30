@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -112,11 +113,21 @@ public class CameraConvertMenu extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode == Static_Access.RQ_CAMERA && resultCode == RESULT_OK) {
-            Uri videoUri = intent.getData();
-            Intent i = new Intent(this, CameraSaver.class);
-            i.putExtra("URI",videoUri.toString());
-            startActivity(i);
+        try {
+            if (requestCode == Static_Access.RQ_CAMERA && resultCode == RESULT_OK) {
+                Uri videoUri = intent.getData();
+                Intent i = new Intent(this, CameraSaver.class);
+                i.putExtra("URI",videoUri.toString());
+                startActivity(i);
+            }
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(this, "An error occurred, retrying...", Toast.LENGTH_LONG).show();
+            Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+            if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(takeVideoIntent, Static_Access.RQ_CAMERA);
+            }
         }
     }
 

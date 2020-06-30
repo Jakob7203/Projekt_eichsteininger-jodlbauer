@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -92,7 +91,13 @@ public class YouTubeSaver extends AppCompatActivity {
                 {
                     if(isConnectedToInternet())
                     {
-                        task.execute((parseYTURL(url)), CHANNEL_ID, editTitle.getText().toString().trim());
+                        try {
+                            task.execute((parseYTURL(url)), CHANNEL_ID, editTitle.getText().toString().trim());
+                        }
+                        catch (Exception e)
+                        {
+                            task.execute((parseYTURL(url)), CHANNEL_ID, editTitle.getText().toString().trim());
+                        }
                     }
                     else
                     {
