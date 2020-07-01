@@ -33,8 +33,8 @@ Jakob Jodlbauer <br />
 | :--- | :---: | :---: |
 | YT-MP3-Downloader | 13 | 6 |
 | Videos per Handykamera aufnehmen | 2 | 3 |
-| Dateiverwaltungssystem | 3 | 8 |
+| Dateiverwaltungssystem | 4 | 9 |
 | GUI | 2 | 4 |
 | Hoch- / Querformat | 1 | 1 |
 | Dark & Light theme | 2 | 1 |
-| Gesamt | 23 | 23 |
+| Gesamt | 24 | 24 |
