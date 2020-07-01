@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Titile (optional)"
+                android:hint="Title (optional)"
                 android:inputType="textPersonName"
                 android:paddingLeft="30px"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
