@@ -136,6 +136,7 @@ public class YouTubeSaver extends AppCompatActivity {
         super.onPause();
         finish();
     }
+
     private String parseYTURL(String videoID) {
         if(videoID.contains("&")) {
             videoID = videoID.split("&")[0];

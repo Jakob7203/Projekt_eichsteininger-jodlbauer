@@ -59,7 +59,6 @@ public class YouTubeAudioList extends AppCompatActivity implements  YouTubeAudio
                         startActivity(new Intent(YouTubeAudioList.this, YouTubeAudioPlayer.class));
                     } else {
                         delete(Static_Access.currentYTAudio);
-                        Toast.makeText(YouTubeAudioList.this, "The File has been delted", Toast.LENGTH_LONG).show();
                     }
                 }
                 catch (Exception e)

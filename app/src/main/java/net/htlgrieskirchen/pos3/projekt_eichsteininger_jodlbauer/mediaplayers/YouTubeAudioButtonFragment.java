@@ -64,10 +64,10 @@ public class YouTubeAudioButtonFragment extends Fragment {
                 public void onClick(View v) {
                     if (Static_Access.currentYTAudio != null) {
                         try {
-                            player.start();
-                        }
-                        catch (Exception e)
-                        {
+                            if (player != null) {
+                                player.start();
+                            }
+                        } catch (Exception e) {
                         }
                     }
                 }
@@ -76,12 +76,11 @@ public class YouTubeAudioButtonFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (Static_Access.currentYTAudio != null) {
-                        try
-                        {
-                            player.pause();
-                        }
-                        catch(Exception e)
-                        {
+                        try {
+                            if (player != null) {
+                                player.pause();
+                            }
+                        } catch (Exception e) {
                         }
                     }
                 }
@@ -95,19 +94,15 @@ public class YouTubeAudioButtonFragment extends Fragment {
                                 player.stop();
                                 player.release();
                             }
-                            Uri u = Uri.fromFile(new File(youTubeDownload.getPath()+youTubeDownload.getTitle()+".mp3"));
+                            Uri u = Uri.fromFile(new File(youTubeDownload.getPath() + youTubeDownload.getTitle() + ".mp3"));
                             player = MediaPlayer.create(context, u);
-                        }
-                        catch (Exception e)
-                        {
+                        } catch (Exception e) {
 
                         }
                     }
                 }
             });
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             //son, just dont
         }
     }
@@ -121,16 +116,24 @@ public class YouTubeAudioButtonFragment extends Fragment {
     {
         super.onPause();
     }
-    public  void killMP()
-    {
-        player.stop();
-        player.release();
-        player=null;
+
+    public void killMP() {
+        if (player != null) {
+            player.stop();
+            player.release();
+            player = null;
+        }
     }
+
     public void play(YouTubeDownload item, Context c) {
+        if (player != null) {
+            if (player.isPlaying()) {
+                killMP();
+            }
+        }
         youTubeDownload = item;
         context = c;
-        File f = (new File(youTubeDownload.getPath()+youTubeDownload.getTitle()+".mp3"));
+        File f = (new File(youTubeDownload.getPath() + youTubeDownload.getTitle() + ".mp3"));
         Uri u = Uri.fromFile(f);
         player = MediaPlayer.create(c, u);
     }
