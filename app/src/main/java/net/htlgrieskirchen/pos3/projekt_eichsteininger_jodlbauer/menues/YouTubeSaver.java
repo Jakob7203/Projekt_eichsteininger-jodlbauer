@@ -134,6 +134,7 @@ public class YouTubeSaver extends AppCompatActivity {
     @Override
     public void onPause(){
         super.onPause();
+        finish();
     }
     private String parseYTURL(String videoID) {
         if(videoID.contains("&")) {

@@ -3,14 +3,14 @@ package net.htlgrieskirchen.pos3.projekt_eichsteininger_jodlbauer.YouTubeDownloa
 import android.view.View;
 import android.widget.ProgressBar;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Collections;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 public class Utils {
 

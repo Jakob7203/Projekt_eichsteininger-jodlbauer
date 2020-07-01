@@ -45,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
             btnYouTube.setImageResource(R.drawable.yt_logo_dark);
             btnCamera.setImageResource(R.drawable.camera_logo_dark);
         }
+
+        File folder = new File("/sdcard/project_eichsteininger_jodlbauer/");
+        if (!folder.exists()) {
+            folder.mkdir();
+            folder = new File("/sdcard/project_eichsteininger_jodlbauer/youtube_audio/");
+            folder.mkdir();
+        }
+
         btnYouTube.setOnClickListener((View v) -> {
             Intent intent = new Intent(this, YouTubeConvertMenu.class);
             startActivity(intent);

@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -42,6 +43,7 @@ public class YoutubeVideoDownloadTask extends AsyncTask<String, String, String> 
     protected String doInBackground(String... parameters) {
         //get download path
         Log.d("DownloadTask", "Task started");
+
         String path = Utils.formatDownloadPath("/sdcard/project_eichsteininger_jodlbauer/youtube_audio/");
         File dir = new File(path);
         Log.d("TAG", dir.getAbsolutePath());
