@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        readFromFile();
         request();
+        readFromFile();
         linearLayout = findViewById(R.id.ll_main);
         getSupportActionBar().setTitle("");
         ImageButton btnYouTube = findViewById(R.id.btnYouTube);

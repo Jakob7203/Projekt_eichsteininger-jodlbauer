@@ -68,7 +68,6 @@ public class YoutubeVideoDownloadTask extends AsyncTask<String, String, String> 
             {
                 songTitle=parameters[2];
             }
-            songTitle=songTitle.replaceAll("|"," ").replaceAll("  "," ");
             String mp3File = Utils.getFilePath(path, songTitle);
             File f = new File(mp3File);
             if (!f.exists()) {
